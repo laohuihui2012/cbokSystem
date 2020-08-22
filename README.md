@@ -10,4 +10,4 @@
  - JS高级
    - [ES6 文档](https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-finally)
    - [ES6 总结](https://github.com/laohuihui2012/cbokSystem/tree/master/javaScript/ES%206)
-   - [原型链和继承](https://github.com/laohuihui2012/cbokSystem/blob/master/javaScript/JS%E5%9F%BA%E7%A1%80/%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%92%8C%E7%BB%A7%E6%89%BF.md)
+   - [原型链和继承](https://github.com/laohuihui2012/cbokSystem/blob/master/javaScript/JS/%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%92%8C%E7%BB%A7%E6%89%BF.md)
