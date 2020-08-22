@@ -72,7 +72,7 @@ Promise.try()
 详情请看https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-finally
 
 #### 3.手写一个简单的promise
-
+```
 const STATUS = {
     pending:"pending",
     fulfilled:"fulfilled",
@@ -145,12 +145,12 @@ class Promise = {
 }
 
 module.exports = Promise;
-
+```
 上面只是一个很简单很简单的写法，.then()方法返回一个新的promise和resolvePromise都还没有实现。
 
 下面是比较完整的写法：
 
-
+```
 class Promise {
   constructor(executor) {
     // 形参校验
@@ -257,7 +257,8 @@ class Promise {
 Promise.PENDING = 'pending';
 Promise.FULFILLED = 'fulfilled';
 Promise.REJECTED = 'rejected';
-
+```
+```
 Promise.resolvePromise = function (promise2, x, resolve, reject) {
   // x 与 promise2 相等 -> 报错
   if (promise2 == x) {
@@ -315,3 +316,4 @@ Promise.defer = Promise.deferred = function () {
 }
 
 module.exports = Promise;
+```
