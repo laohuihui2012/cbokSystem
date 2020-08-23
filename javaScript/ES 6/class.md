@@ -4,7 +4,7 @@
 #### 1.构造函数的定义
 
 构造函数的定义与普通函数大致差不多
----
+```
 function 类型名称 (配置参数) {
     this.属性1 = 属性值1;
     this.属性2 = 属性值2;
@@ -77,3 +77,69 @@ class 的定义与规则
   static:定义静态属性方法，（静态属性和方法不能被实例继承，只能通过类调用）
   get:取值函数，拦截属性的取值行为
   set:存值函数，拦截属性的存值行为
+
+静态属性：定义类完成后赋值属性，该属性不会被实例继承，只能通过类来调用
+静态方法：使用static定义方法，该方法不会被实例继承，只能通过类来调用(方法中的this指向类，而不是实例)
+
+##### 继承：
+ES5：构造继承=》将父类的方法和属性给的子类的实例:先创建子类实例的this，再将父类的方法和属性添加到this上 (parent.call(this))
+
+ES6: 本质上是调用super()先将父类实例的属性方法加到this上，再用子类构造函数(constructor)修改this
+注意：子类使用父类的属性方法时，必须在构造函数中调用super()，否则得不到父类的this;
+
+
+super的使用：
+1.作为函数调用时，代表父类的构造函数（虽然代表的时父类的构造函数，但是返回的是子类的实例，所以super内部的this指向子类的实例）
+2.作为对象调用时，在普通方法中调用，指向父类的原型对象，在静态方法中调用指向父类
+
+作为函数使用，this指向子类的实例
+```
+class A {
+  constructor() {
+    console.log(new.target.name);
+  }
+}
+class B extends A {
+  constructor() {
+    super();
+  }
+}
+new B() // B
+```
+
+作为对象使用：在普通方法中使用，指向父类对象原型
+```
+class A {
+  p() {
+    return 2;
+  }
+}
+
+class B extends A {
+  constructor() {
+    super();
+    console.log(super.p()); // 2
+  }
+}
+
+let b = new B();
+```
+那么父类实例的方法和属性super就无法调用
+
+```
+class A {
+  constructor() {
+    this.p = 2;
+  }
+}
+
+
+class B extends A {
+  get m() {
+    return super.p;
+  }
+}
+
+let b = new B();
+b.m // undefined
+```
