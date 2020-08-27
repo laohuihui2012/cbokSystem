@@ -235,3 +235,5 @@ new Student('xiaom', 12, '150cm').message();
 // ----------
 // name:xiaom, age:12, high:150cm, gender:man;
 ```
+#### 深入底层原理了解this
+从ECMAScript规范解读this：https://github.com/mqyqingfeng/Blog/issues/7
