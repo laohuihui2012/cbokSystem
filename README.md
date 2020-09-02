@@ -30,3 +30,4 @@
 ## 性能优化
  - 
    - [防抖与节流](https://github.com/laohuihui2012/cbokSystem/blob/master/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81.md)
+   - [SSR](https://github.com/laohuihui2012/cbokSystem/blob/master/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93.md)
