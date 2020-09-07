@@ -141,5 +141,12 @@ Fiber 代表一种工作单元。 Fiber 是一种数据结构(堆栈帧)，也�
 
  - 根据 EffectList 更新 DOM。
 
+#### fiber的原理请看下面文章：
+
 [fiber一](https://mp.weixin.qq.com/s/dONYc-Y96baiXBXpwh1w3A)
+
 [fiber二](https://juejin.im/post/6844903901590716429)
+
+https://blog.csdn.net/qiqingjin/article/details/80118669
+
+https://blog.csdn.net/qiqingjin/article/details/80118669
