@@ -16,7 +16,7 @@ obj.sayHello.apply(obj1);
 // hello, i am lulin 24 years old
 ```
 原理就是：
-先通过obj1.fn = obj.sayHello;将sayHello作为obj1的一个零时属性fn存储，然后执行fn,执行完毕后删除fn.
+先通过obj1.fn = obj.sayHello;将sayHello作为obj1的一个临时属性fn存储，然后执行fn,执行完毕后删除fn.
 
 例如下面obj.sayHello.call(obj1, 24)
 ```
