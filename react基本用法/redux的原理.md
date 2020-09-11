@@ -46,7 +46,7 @@ store.dispatch({
 });
 ```
 #### 4.Reducer
-Reducer是什么呢，在redux中store自己是不处理数据的。当store接到视图层发来的actio要改变数据时，store会把当前的state和这个action传给Reducer，然后Reducer处理完数据返回一个新的state给到store。tore.subscribe()监听到了数据的改变，再调用相应的方法重新渲染视图层。（比如react中的render方法或是setState）
+Reducer是什么呢，在redux中store自己是不处理数据的。当store接到视图层发来的actio要改变数据时，store会把当前的state和这个action传给Reducer，然后Reducer处理完数据返回一个新的state给到store。store.subscribe()监听到了数据的改变，再调用相应的方法重新渲染视图层。（比如react中的render方法或是setState）
 
 说白了Reducer就state的计算过程。
 下面是一个实际reducer例子
