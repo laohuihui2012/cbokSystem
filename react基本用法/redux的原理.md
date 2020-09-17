@@ -11,7 +11,7 @@ redux是一个状态管理器，redux和react没有任何关系，它可以应�
 #### 3.redux基本原理
 redux将所有的状态装在一个对象里（store），视图层与状态一一对应。
 
-redux可以创建一个store(存储所以状态，全局只有一个)，然后store有三个属性方法：getState、dispatch、subscribe。getState是用来获取数据的，dispatch是用来通知改变数据的，subscribe是监听数据的改变等一些列操作的。
+redux可以创建一个store(存储所有状态，全局只有一个)，然后store有三个属性方法：getState、dispatch、subscribe。getState是用来获取数据的，dispatch是用来通知改变数据的，subscribe是监听数据的改变等一些列操作的。
 
 ##### 3.1 store.getState
 某一时刻的store的状态就是state。下面state就是取得某一时刻的store状态
@@ -46,7 +46,7 @@ store.dispatch({
 });
 ```
 #### 4.Reducer
-Reducer是什么呢，在redux中store自己是不处理数据的。当store接到视图层发来的actio要改变数据时，store会把当前的state和这个action传给Reducer，然后Reducer处理完数据返回一个新的state给到store。store.subscribe()监听到了数据的改变，再调用相应的方法重新渲染视图层。（比如react中的render方法或是setState）
+Reducer是什么呢，在redux中store自己是不处理数据的。当store接到视图层发来的action要改变数据时，store会把当前的state和这个action传给Reducer，然后Reducer处理完数据返回一个新的state给到store。store.subscribe()监听到了数据的改变，再调用相应的方法重新渲染视图层。（比如react中的render方法或是setState）
 
 说白了Reducer就state的计算过程。
 下面是一个实际reducer例子
