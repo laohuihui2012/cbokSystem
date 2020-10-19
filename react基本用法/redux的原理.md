@@ -341,3 +341,6 @@ const applyMiddleware = function (...middlewares) {
 }
 ```
 更多实现请看：https://mp.weixin.qq.com/s/cYp-8zm-d1Rtn9qC7EF-Cw
+
+#### redux的不足
+- 修改一个小数据，都会触发所以的事件队列而更新所有用到redux的组件
