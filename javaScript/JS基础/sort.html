@@ -15,21 +15,20 @@
 
 
     function fastSort(arr) {
-        if(arr.length < 2) return arr;
+        let len = arr.length,
+            preIndex,
+            current
 
-        let left = [],
-            right = [],
-            pivotIndex = Math.floor(arr.length/2),
-            pivot = arr.splice(pivotIndex,1)[0]
-
-        for (let i = 0; i < arr.length; i++) {
-           if(arr[i] < pivot){
-               left.push(arr[i])
-           }else{
-               right.push(arr[i])
+        for (let i = 1; i < arr.length; i++) {
+           preIndex = i - 1;
+           current = arr[i];
+           while(preIndex >= 0 && current < arr[preIndex]){
+               arr[preIndex + 1] = arr[preIndex];
+               preIndex--;
            }
+           arr[preIndex + 1] = current;
         }
-        return fastSort(left).concat([pivot],fastSort(right));
+        return arr;
     }
 
     console.log(fastSort(arr))
