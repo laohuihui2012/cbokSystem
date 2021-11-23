@@ -11,27 +11,79 @@
 
 </body>
 <script>
-    let arr = [4, 10, 40, 38, 56, 39, 36, 9];
+    // let arr = [4, 10, 40, 38, 56, 39, 36, 9];
 
 
-    function fastSort(arr) {
-        let len = arr.length,
-            preIndex,
-            current
+    // function fastSort(arr) {
+    //     let len = arr.length,
+    //         preIndex,
+    //         current
 
-        for (let i = 1; i < arr.length; i++) {
-           preIndex = i - 1;
-           current = arr[i];
-           while(preIndex >= 0 && current < arr[preIndex]){
-               arr[preIndex + 1] = arr[preIndex];
-               preIndex--;
-           }
-           arr[preIndex + 1] = current;
+    //     for (let i = 1; i < arr.length; i++) {
+    //        preIndex = i - 1;
+    //        current = arr[i];
+    //        while(preIndex >= 0 && current < arr[preIndex]){
+    //            arr[preIndex + 1] = arr[preIndex];
+    //            preIndex--;
+    //        }
+    //        arr[preIndex + 1] = current;
+    //     }
+    //     return arr;
+    // }
+
+    // console.log(fastSort(arr))
+    export default class compile {
+        constructor(el, vue) {
+            this.$vue = vue; // vue实例
+            // 获取挂载点
+            this.$el = document.querySelector(el);
+            if(this.$el) { 
+                // 如果用户传入了挂在点，调用node2Fragment函数，让节点变为fragment（类似 mustache 里的 tokens）
+                const $fragment = this.node2Fragment(this.$el);
+                // 对文档片段进行编译
+                this.compile($fragment);
+                // 将文档片段上树
+                this.$el.appendChid($fragment)
+                
+            }
         }
-        return arr;
-    }
 
-    console.log(fastSort(arr))
+        node2Fragment(el) {
+            var fragment = document.createDocumentFragment()
+            var child;
+            while(child = el.firstChild) { // 这里是一个赋值操作，在fragment.appendChild第一个child之后，
+                // 第二个就变成第一个了，直到全部加入
+                fragment.appendChild(child)
+            }
+            return fragment
+        }
+
+        compile(el) {
+            // 得到子元素
+            var childNodes = el.childNodes
+            var _self = this
+            var reg = /\{\{(.*)\}\}/;
+            childNodes.forEach(node => {
+                var text = node.textContent
+                if(node.nodeType === 1){
+                    _self.compileElement(node)
+                }else if(node.nodeType === 3 && reg.test(text)){
+                    var name = text.match(reg)[1]
+                    _self.compileText(node, name)
+                }
+            })
+        }
+
+        // 这里处理文本元素
+        compileText() {
+
+        }
+        //这里处理节点元素
+        compileElement() {
+
+        }
+
+    }
 </script>
 
 </html>
