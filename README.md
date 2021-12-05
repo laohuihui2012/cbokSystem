@@ -1,12 +1,14 @@
 # 知识体系
 决定做这个总结是因为之前学东西，学完一会就忘了，而且这里学一点那里学一点，没有一点系统。这个总结一是可以让自己系统的学习，二是把东西都总结好了，没事拿出来看看就能防止容易忘记。更重要的是总结出适合自己的学习方法：一个知识=》先知道它是什么=》包含哪些东西=》用途=》注意点   看完之后自己总结一下，这样脑海里面又把它过了一遍。晚上快睡觉的时候再脑子里面过一遍
 ## 前端框架
- - React.js
+ - React
     - [react 官方文档](https://zh-hans.reactjs.org/docs/getting-started.html)
     - [react 基本用法](https://github.com/laohuihui2012/cbokSystem/tree/master/react%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
     - [react hooks](https://github.com/laohuihui2012/cbokSystem/tree/master/react-hooks)
     - [redux的原理](https://github.com/laohuihui2012/cbokSystem/blob/master/react%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/redux%E7%9A%84%E5%8E%9F%E7%90%86.md)
      - [虚拟DOM和fiber](https://github.com/laohuihui2012/cbokSystem/blob/master/react%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/react%E8%99%9A%E6%8B%9Fdom.md)
+ - vue
+   - [Vue 指令和双向绑定思路](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/Vue%20%E6%8C%87%E4%BB%A4%E5%92%8C%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E6%80%9D%E8%B7%AF.md)
 ## javaScipt
  - JS高级
    - [ES6 文档](https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-finally)
@@ -36,5 +38,5 @@
    - [虚拟列表](https://github.com/laohuihui2012/cbokSystem/blob/master/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E8%99%9A%E6%8B%9F%E5%88%97%E8%A1%A8.md)
 ## CSS
  - [css](https://www.w3school.com.cn/h.asp)
-   - [flex布局](https://github.com/laohuihui2012/cbokSystem/blob/master/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81.md)
+   - [flex布局](https://github.com/laohuihui2012/cbokSystem/blob/master/css/flex%E5%B8%83%E5%B1%80.md)
    - [BFC](https://zhuanlan.zhihu.com/p/25321647)
