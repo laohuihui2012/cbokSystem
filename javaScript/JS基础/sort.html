@@ -32,48 +32,9 @@
     // }
 
     // console.log(fastSort(arr))
-    import observe from './observe.js';
-    import Dep from './Dep.js';
-    var obj = {}
-    function defineReactive(data, key, val) {
-        const dep = new Dep();
-        if(arguments.length == 2) {
-            val = data[key];
-        }
+    
 
-        // 子元素进行observe，以此形成递归
-        let childOb = observe(val);
-
-        Object.defineProperty(data, key, {
-            value: 3,
-            writable: true, // value是否重新赋值
-            enumerable: true, // 是否可被枚举
-            configurable: true, // 是否可配置（例如删除）
-            get() { //  getter 函数
-                // 当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this 对象
-                console.log('你访问了obj的a属性')
-                // 依赖收集
-                if(Dep.target) {
-                    dep.depend();  // 将watcher添加到订阅事件中 [watcher]
-                    if(childOb) {
-                        childOb.dep.depend();
-                    }
-                }
-                return val
-            },
-            set(newVal) { // setter 函数
-                // 当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 this 对象
-                if( val == newVal ) {
-                    return;
-                }
-                val = newVal
-                // 当设置了新值，这个新值也要被observe
-                childOb = observe(newVal)
-                // 发布订阅模式，通知dep
-                dep.notify()
-            }
-        }) 
-    }
+        
     
 </script>
 
