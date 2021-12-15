@@ -126,7 +126,66 @@
             return result;
         }, false)
     })
-        
+
+    import Dep from './Dep.js';
+
+    var uid = 0;
+    export default class Watcher {
+        constructor(target, expression, callback) {
+            this.id = uid++;
+            this.target = target;
+            this.getter = parsePath(expression); // 解析表达式的（obj.a.b)
+            this.value = this.get()
+        }
+
+        updated() {
+            this.run()
+        }
+
+        get() {
+            // 让全局的Dep.target设置为Watcher实例本身，就进入了依赖收集阶段
+            Dep.target = this;
+            const obj = target;
+            var value;
+
+            try {
+                // 只要能找就一直往下找
+                value = this.getter(obj);
+            } finally {
+                // 结束时需要释放Dep.target位置
+                Department.target = null;
+            }
+
+            return value;
+        }
+
+        run() {
+            this.getAndInvoke(this.callback);
+        }
+
+        getAndInvoke(cb) {
+            var value = this.get(); // 获取当前值
+            
+            if(value !== this.value || typeof value === 'object' ) {
+                const oldValue = this.value; // 保存老的值
+                this.value = value; 
+                cb.call(this.target, value, oldValue)
+            }
+
+        }
+    }
+
+    function parsePath(expr) {
+        var exprArr =  expr.split('.');
+
+        return (obj) => {
+            for (let i= 0; i < exprArr.length; i++) {
+                if(!obj) return;
+                obj = obj[exprArr[i]];
+            }
+            return obj
+        }
+    }
     
 </script>
 
