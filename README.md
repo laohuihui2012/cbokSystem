@@ -9,6 +9,8 @@
      - [虚拟DOM和fiber](https://github.com/laohuihui2012/cbokSystem/blob/master/react%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/react%E8%99%9A%E6%8B%9Fdom.md)
  - vue
    - [Vue 指令和双向绑定思路](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/Vue%20%E6%8C%87%E4%BB%A4%E5%92%8C%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E6%80%9D%E8%B7%AF.md)
+   - [响应式原理](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.md)
+   - [DOM diff](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/diff%E7%AE%97%E6%B3%95(%E8%99%9A%E6%8B%9FDOM).md)
 ## javaScipt
  - JS高级
    - [ES6 文档](https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-finally)
