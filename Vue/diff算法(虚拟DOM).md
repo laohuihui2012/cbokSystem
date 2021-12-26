@@ -119,15 +119,15 @@
 ### patchVnode函数进行精细比较
   注意点: 为了简化手写过程，虚拟节点里 children 属性和 text 属性是互斥的，二者有且只有一个有值
   所以就是分三种情况处理
-  1. 新节点有文本属性
+  1. 新节点有文本属性:
     - 此时旧节点是text属性还是children属性，直接通过innerText赋值（在innerText写入时会删除所有的子节点）
-  2. 新节点有children属性
+  2. 新节点有children属性:
     - 旧节点有text属性（清空oldVnode的text属性，把newVnode的children添加到DOM中）
     - 旧节点有children属性（进行四种查找，循环遍历等）
 ```
     import createElement from "./createElement";
     import updateChildren from './updateChildren.js';
-    
+
     export default function patchVnode(oldVnode, newVnode) {
         // 判断是否时同一个对象
         if(oldVnode === newVnode) return; // 同一对象不处理
@@ -152,4 +152,80 @@
         }
     }
 ```
+ ### diff 算法优化策略，对新老节点的children进行更优雅的比较
+  在这一部分比较里面，先会进行四种情况查找，根据命中的情况做处理。
+  都没有命中之后会，遍历然后判断情况处理
+  1. 新前与旧前:
+    - 如果命中, 由patchVnode 函数处理新老节点，新前和旧前指针下移
+  2. 新后与旧后:
+    - 如果命中, 由patchVnode 函数处理新老节点，新后和旧后指针上移
+  3. 新后与旧前:
+    - 如果命中,将旧前指向节点移动到旧后指向的节点之后，然后旧前指针下移，新后指针上移
+  4. 新前与旧后:
+    - 如果命中,将旧后指向节点移动到旧前指向的节点之后，然后旧前指针上移，新前指针下移
+```
+    import patchVnode from './patchVnode.js';
+    import createElement from './createElement.js';
+
+    // 判断是否是同一个虚拟节点
+    function checkSameVnode(a, b) {
+        return a.sel == b.sel && a.key == b.key;
+    };
+
+    export default function updateChildren(parentElm, oldCh, newCh) {
+        // 准备四个指针
+        let oldStartIdx = 0; // 旧前
+        let oldEndIdx = oldCh.length - 1; //旧后
+        let newStartIdx = 0; // 新前
+        let newEndIdx = newCh.length - 1; // 新后
+        let oldStartVnode = oldCh[0]; // 旧前节点
+        let oldEndVnode = oldCh[oldEndIdx]; // 旧后节点
+        let newStartVnode = newCh[0]; // 新前节点
+        let newEndVnode = newCh[newEndIdx]; // 旧后节点
+
+        let keyMap = null;
+
+        // 循环
+        while (oldEndIdx >= oldStartIdx || newEndIdx >= newStartIdx) {
+            // 首先不是判断四种命中，而是略过加undefined标记的东西
+            if(oldStartVnode === null || oldCh[oldStartIdx] === undefined) {
+                oldStartVnode = oldCh[++oldStartIdx];
+            } else if(newStartVnode === null || newCh[newStartIdx] === undefined) {
+                newStartVnode = newCh[++newStartIdx];
+            } else if(oldEndVnode === null || oldCh[oldEndIdx] === undefined) {
+                oldEndVnode = oldCh[--oldEndIdx];
+            } else if(newEndVnode === null || newCh[newEndIdx] === undefined) {
+                newEndVnode = newCh[--newEndIdx];
+            } else if(checkSameVnode(newStartVnode, oldStartVnode)) {
+                // 命中新前与旧前
+                patchVnode(newStartVnode, oldStartVnode);
+                newStartVnode = newCh[++newStartIdx];
+                oldStartVnode = oldCh[++oldStartIdx];
+            } else if(checkSameVnode(newEndVnode, oldEndVnode)) {
+                // 命中新后与旧后
+                patchVnode(newEndVnode, oldEndVnode);
+                newEndVnode = newCh[--newEndIdx];
+                oldEndVnode = oldCh[--oldEndIdx];
+            } else if(checkSameVnode(newEndVnode, oldStartVnode)){
+                // 命中新后与旧前
+                patchVnode(newEndVnode, oldStartVnode);
+                // 将旧前指向的节点移动到旧后指向的节点之后，（注意这里是旧后指向的节点，有可能已经有移动到他之后的节点了）
+                parentElm.insertBefore(oldStartVnode.elm, oldEndVnode.elm.nextSibing);
+                newEndVnode = newCh[--newEndIdx];
+                oldStartVnode = oldCh[++oldStartIdx];
+            } else if(checkSameVnode(newStartVnode, oldEndVnode)) {
+                // 命中新前与旧后
+                patchVnode(newStartVnode, oldEndVnode);
+                // 将旧后指向的节点移动到旧前指向的节点之前（注意是旧前指向的节点之前，原因和上面一样）
+                parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm);
+                oldEndVnode = oldCh[--oldEndIdx];
+                newStartVnode = newCh[++newStartIdx];
+            } else {
+                // 这里是四种都没有命中的情况
+            }
+        }
+        
+    }
+```
+
 
