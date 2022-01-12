@@ -88,9 +88,54 @@
                 newStartVnode = newCh[++newStartIdx];
             } else {
                 // 这里是四种都没有命中的情况
+                // 遍历旧前到旧后制作keyMap一个映射对象{key: i},这样只需要遍历一次
+                let keyMap = {};
+                for (let i = oldStartIdx; i < oldEndIdx; i++) {
+                    let key = oldCh[i]?.key 
+                    if(key) keyMap[key] = i
+                }
+
+                // 然后寻找当前项key是否存在keyMap映射种
+                let idInOld = keyMap[newStartVnode.key]
+
+                //如果idInOld存在则证明该节点存在旧DOM中，只需要移动就好了
+                if(idInOld) {
+                    // 先将需要移动的节点暂存起来
+                    const elmToMove = oldCh[idInOld];
+                    // 然后通过patchVnode处理
+                    patchVnode(elmToMove, newStartVnode);
+
+                    // 将要处理过的节点设置为undefined
+                    oldCh[idInOld] = undefined;
+                    // 移动节点
+                    parentElm.insertBefore(elmToMove.elm, oldStartVnode.elm);
+                } else {
+                    // idInOld不存在，则证明是新增节点，创建该节点插入新前之前
+                    parentElm.insertBefore(createElement(newStartVnode), oldStartVnode.elm);
+                }
+                // 注意的是：在上面的操作之后，需要将新前节点下移
+                newStartVnode = newCh[++newStartIdx];
             }
         }
-        
+        // 当while循环结束后只有两种情况
+        // oldStartIdx > oldEndIdx 或者 newStartIdx > newEndIdx
+        // 1.oldStartIdx > oldEndIdx 则表示有新增节点
+        if(oldStartIdx > oldEndIdx) {
+            // 遍历剩下新增的节点
+            // 需要注意的是，因为我们这里是阉割版的，所以newCh[newEndIdx + 1]的elm是undefined，所以我们直接到旧前之前
+            //let before = newCh[newEndIdx + 1] === null ? null : newCh[newEndIdx + 1]
+            for (let i = newStartIdx; i < newEndIdx; i++) {
+                // insertBefore方法可以自动识别null，如果是null就会自动排到队尾去,和appendChild是一致了。
+                // parentElm.insertBefore(createElement(newCh[i]), before);
+               parentElm.insertBefore(createElement(newCh[i]), oldCh[oldStartIdx].elm); 
+            }
+        } else if(oldStartIdx > oldEndIdx) { 
+            // 2.newStartIdx > newEndIdx 则表示有删除节点
+            // 删除老节点中要删除的节点
+            for (let i = oldStartIdx; i < oldEndIdx; i++) {
+                parentElm.removeChild(old[i].elm);
+            }
+        }
     }
 </script>
 
