@@ -1,36 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+### 1.什么是抽象语法树？
+* 抽象语法树本质上是一个JS对象，vue模板语法变成页面的过程如下
+  模板语法 =>（解析）抽象语法树 =>经过函数渲染（h函数）处理 =>虚拟DOM节点 =>页面
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+### 2.先来一个题目
+试编写“智能重复”smartRepeat函数，实现：
+• 将3[abc]变为abcabcabc
+• 将3[2[a]2[b]]变为aabbaabbaabb
+• 将2[1[a]3[b]2[3[c]4[d]]]变为abbbcccddddcccddddabbbcccddddcccdddd
 
-<body>
-
-</body>
-<script>
-    // let arr = [4, 10, 40, 38, 56, 39, 36, 9];
-
-
-    // function fastSort(arr) {
-    //     let len = arr.length,
-    //         preIndex,
-    //         current
-
-    //     for (let i = 1; i < arr.length; i++) {
-    //        preIndex = i - 1;
-    //        current = arr[i];
-    //        while(preIndex >= 0 && current < arr[preIndex]){
-    //            arr[preIndex + 1] = arr[preIndex];
-    //            preIndex--;
-    //        }
-    //        arr[preIndex + 1] = current;
-    //     }
-    //     return arr;Str
-    // }
-
+不用考虑输入字符串是非法的情况，比如：
+• 2[a3[b]]是错误的，应该补一个1，即2[1[a]3[b]]
+• [abc]是错误的，应该补一个1，即1[abc]
+```
     function smartRepeat(templateStr) {
         // 先准备一个指针
         var index = 0;
@@ -76,8 +57,4 @@
         // 当循环结束，stack1、stack2各还剩一项，将剩余的一项出栈重复stack1最后一项的次数，然后返回
         return stack2[0].repeat(stack1[0]);
     }
-    const str = '2[1[a]3[b]2[3[c]4[d]]]'
-    console.log(smartRepeat(str))
-</script>
-
-</html>
+```

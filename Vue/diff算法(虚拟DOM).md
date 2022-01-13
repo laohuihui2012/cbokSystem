@@ -258,14 +258,17 @@
             // 遍历剩下新增的节点
             // 需要注意的是，因为我们这里是阉割版的，所以newCh[newEndIdx + 1]的elm是undefined，所以我们直接到旧前之前
             //let before = newCh[newEndIdx + 1] === null ? null : newCh[newEndIdx + 1]
+
             for (let i = newStartIdx; i < newEndIdx; i++) {
                 // insertBefore方法可以自动识别null，如果是null就会自动排到队尾去,和appendChild是一致了。
                 // parentElm.insertBefore(createElement(newCh[i]), before);
+                
                parentElm.insertBefore(createElement(newCh[i]), oldCh[oldStartIdx].elm); 
             }
         } else if(oldStartIdx > oldEndIdx) { 
             // 2.newStartIdx > newEndIdx 则表示有删除节点
             // 删除老节点中要删除的节点
+
             for (let i = oldStartIdx; i < oldEndIdx; i++) {
                 parentElm.removeChild(old[i].elm);
             }
