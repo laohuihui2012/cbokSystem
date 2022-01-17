@@ -3,7 +3,7 @@
   模板语法 =>（解析）抽象语法树 =>经过函数渲染（h函数）处理 =>虚拟DOM节点 =>页面
 
 ### 2.先来一个题目
-试编写“智能重复”smartRepeat函数，实现：
+试编写“智能重复”smartRepeat函数，实现:
 • 将3[abc]变为abcabcabc
 • 将3[2[a]2[b]]变为aabbaabbaabb
 • 将2[1[a]3[b]2[3[c]4[d]]]变为abbbcccddddcccddddabbbcccddddcccdddd
