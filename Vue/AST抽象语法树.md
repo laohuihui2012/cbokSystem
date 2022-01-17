@@ -58,3 +58,90 @@
         return stack2[0].repeat(stack1[0]);
     }
 ```
+### 手写简单的抽象语法树
+
+```
+function parse(templateString) {
+        // 指针
+        var index = 0;
+        // 剩余字符串
+        var rest = '';
+        // 准备两个栈
+        var stack1 = [];
+        var stack2 = [{'children': []}];
+
+        // 匹配开始标签的正则
+        var startReg = /^\<([a-z]+[1-6]?)(\s[^\<]+)?\>/;
+        // 匹配结束标签的正则
+        var endReg = /^\<\/([a-z]+[1-6]?)\>/;
+        // 匹配结束标签前文字的正则
+        var wordReg = /^([^\<]+)\<\/[a-z]+[1-6]?\>/;
+
+        while (index < templateString.length - 1) {
+          // 截取剩余未遍历字符串 
+          rest = templateString.substring(index);
+          // 匹配开头是不是开始标签
+          if(startReg.test(rest)) {
+              // 获取得到开始标签名
+              var tag = rest.match(startReg)[1];
+              var attrStr = rest.match(startReg)[2];
+              // 将标签名推入栈1
+              stack1.push(tag);
+              // 将空数组推入栈2中
+              stack2.push({'tag': tag, 'children': [], 'attrs': []});
+              // 因为标签上可能没有类名，所以
+              var attrLength = attrStr != null ? attrStr.length : 0; 
+              // 指针移动的长度等于标签名的长度加'<'和'>'的长度,再加上attrStr的长度
+              index += tag.length + 2 + attrLength;
+          } else if (endReg.test(rest)) {
+              // 匹配到结束标签
+              var tag = rest.match(endReg)[1];
+              // 匹配到结束标签，标签出栈
+              var pop_tag = stack1.pop();
+              // 此时结束tag和栈1的栈顶的标签肯定是一样的
+              if (tag === pop_tag) {
+                  // 栈2栈顶项出栈
+                  let pop_arr = stack2.pop();
+                  console.log(pop_arr)
+                  // 将出栈的项放入栈顶的内部,当然需要判断此时栈里还存在子项
+                  if(stack2.length > 0) {
+                    stack2[stack2.length - 1].children.push(pop_arr);
+                  }
+              } else {
+                  throw new Error(pop_tag + '标签没有闭合!');
+              }
+              // 指针移动tag名长度加'</>'的长度
+              index += tag.length + 3
+          } else if (wordReg.test(rest)) {
+              // 匹配到标签中间的文字
+              let word = rest.match(wordReg)[1];
+              // 看获取到的文字是否全部为空
+              if(!/^\s+$/.test(word)) {
+                  // 不全是空
+                  // 将文字放到stack2栈顶的数组children中
+                  console.log(stack2)
+                  stack2[stack2.length - 1].children.push({'text': word, 'type': 3});
+              }
+              console.log(word);  
+              index += word.length;
+          } else {
+              index++;
+          }
+        }
+        return stack2[0].children[0]
+    }
+
+
+    var templateString = `<div>
+            <h3 class="aa bb cc" data-n="7" id="mybox">你好</h3>
+            <ul>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+            </ul>
+        </div>`;
+
+    const ast = parse(templateString);
+    console.log(ast);
+    
+```
