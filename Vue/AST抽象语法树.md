@@ -61,7 +61,7 @@
 ### 手写简单的抽象语法树
 
 ```
-function parse(templateString) {
+    function parse(templateString) {
         // 指针
         var index = 0;
         // 剩余字符串
@@ -88,7 +88,7 @@ function parse(templateString) {
               // 将标签名推入栈1
               stack1.push(tag);
               // 将空数组推入栈2中
-              stack2.push({'tag': tag, 'children': [], 'attrs': []});
+              stack2.push({'tag': tag, 'children': [], 'attrs': parseAttrsString(attrStr)});
               // 因为标签上可能没有类名，所以
               var attrLength = attrStr != null ? attrStr.length : 0; 
               // 指针移动的长度等于标签名的长度加'<'和'>'的长度,再加上attrStr的长度
@@ -143,5 +143,52 @@ function parse(templateString) {
 
     const ast = parse(templateString);
     console.log(ast);
-    
+
+```
+#### 解析attrs
+ * 在上面的例子中我们没有解析attrStr
+ * 我们需要将得到的 'class="aa bb cc" data-n="7" id="mybox"' 属性字符串解析成[{name:k, value:v}, {name:k, value:v}, {name:k,value:v}]
+```
+    function parseAttrsString(attrStr) {
+        // 如果是undefiend，返回空数组
+        if(attrStr == undefined) return [];
+        // 准备一个变量，判断标记是否在引号里面
+        var isInYinHao = false;
+        // 断点
+        var point = 0;
+        // 结果数组
+        var result = [];
+
+        // 遍历attrStr
+        for (let i = 0; i < attrStr.length; i++) {
+            let charStr = attrStr[i];
+            if(charStr == '"') {
+                // 第一个 '"'表示进入引号（在引号里面），再次碰到'"'表示出了引号
+                isInYinHao = !isInYinHao;
+            } else if (charStr == " " && !isInYinHao) {
+                // 不在引号里面的空格，可以用来分割属性
+                if(!/^\s*$/.test(attrStr.substring(point, i))) {
+                    // 排除第一个为空的
+                    result.push(attrStr.substring(point, i).trim());
+                    // 移动断点
+                    point = i;
+                }
+            }
+        }
+        // 循环之后，还剩下一个k="v"的属性
+        result.push(attrStr.substring(point));
+
+        // 到了此时数组里面是这样的：['k=v', 'k=v', 'k=v'],
+        // 我们需要将它变成[{name: k, value: v}, {name: k, value: v}, {name: k, value: v},]
+        result = result.map(item => {
+            // 根据等号拆分
+            let c = item.match(/^(.+)="(.+)"$/);
+            return {
+                name: c[1],
+                value: c[2],
+            }
+        })
+        console.log(result);
+        return result;
+    }
 ```
