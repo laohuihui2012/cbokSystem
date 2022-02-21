@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
+<style type="text/css">
+</style>
+     
 <body>
-
 </body>
 <script>
     // let arr = [4, 10, 40, 38, 56, 39, 36, 9];
@@ -30,131 +31,25 @@
     //     }
     //     return arr;Str
     // }
-
-    function parseAttrsString(attrStr) {
-        // 如果是undefiend，返回空数组
-        if(attrStr == undefined) return [];
-        // 准备一个变量，判断标记是否在引号里面
-        var isInYinHao = false;
-        // 断点
-        var point = 0;
-        // 结果数组
-        var result = [];
-
-        // 遍历attrStr
-        for (let i = 0; i < attrStr.length; i++) {
-            let charStr = attrStr[i];
-            if(charStr == '"') {
-                // 第一个 '"'表示进入引号（在引号里面），再次碰到'"'表示出了引号
-                isInYinHao = !isInYinHao;
-            } else if (charStr == " " && !isInYinHao) {
-                // 不在引号里面的空格，可以用来分割属性
-                if(!/^\s*$/.test(attrStr.substring(point, i))) {
-                    // 排除第一个为空的
-                    result.push(attrStr.substring(point, i).trim());
-                    // 移动断点
-                    point = i;
-                }
-            }
-        }
-        // 循环之后，还剩下一个k="v"的属性
-        result.push(attrStr.substring(point));
-
-        // 到了此时数组里面是这样的：['k=v', 'k=v', 'k=v'],
-        // 我们需要将它变成[{name: k, value: v}, {name: k, value: v}, {name: k, value: v},]
-        result = result.map(item => {
-            // 根据等号拆分
-            let c = item.match(/^(.+)="(.+)"$/);
-            return {
-                name: c[1],
-                value: c[2],
+    function defineRactive(data, key ,value) {
+        Object.defineProprety(data, key, {
+            enumerable: true,
+            configurable: true,
+            set: function setter(params) {
+                console.log(`get key: ${key}, vaule:${value} `);
+                return value;
+            },
+            get:function getter(newval) {
+              console.log(`set key:${key}, value:${newval}`); 
+              value = newval; 
             }
         })
-        console.log(result);
-        return result;
     }
-
-    function parse(templateString) {
-        // 指针
-        var index = 0;
-        // 剩余字符串
-        var rest = '';
-        // 准备两个栈
-        var stack1 = [];
-        var stack2 = [{'children': []}];
-
-        // 匹配开始标签的正则
-        var startReg = /^\<([a-z]+[1-6]?)(\s[^\<]+)?\>/;
-        // 匹配结束标签的正则
-        var endReg = /^\<\/([a-z]+[1-6]?)\>/;
-        // 匹配结束标签前文字的正则
-        var wordReg = /^([^\<]+)\<\/[a-z]+[1-6]?\>/;
-
-        while (index < templateString.length - 1) {
-          // 截取剩余未遍历字符串 
-          rest = templateString.substring(index);
-          // 匹配开头是不是开始标签
-          if(startReg.test(rest)) {
-              // 获取得到开始标签名
-              var tag = rest.match(startReg)[1];
-              var attrStr = rest.match(startReg)[2];
-              console.log(attrStr)
-              // 将标签名推入栈1
-              stack1.push(tag);
-              // 将空数组推入栈2中
-              stack2.push({'tag': tag, 'children': [], 'attrs': parseAttrsString(attrStr)});
-              // 因为标签上可能没有类名，所以
-              var attrLength = attrStr != null ? attrStr.length : 0; 
-              // 指针移动的长度等于标签名的长度加'<'和'>'的长度,再加上attrStr的长度
-              index += tag.length + 2 + attrLength;
-          } else if (endReg.test(rest)) {
-              // 匹配到结束标签
-              var tag = rest.match(endReg)[1];
-              // 匹配到结束标签，标签出栈
-              var pop_tag = stack1.pop();
-              // 此时结束tag和栈1的栈顶的标签肯定是一样的
-              if (tag === pop_tag) {
-                  // 栈2栈顶项出栈
-                  let pop_arr = stack2.pop();
-                  // 将出栈的项放入栈顶的内部,当然需要判断此时栈里还存在子项
-                  if(stack2.length > 0) {
-                    stack2[stack2.length - 1].children.push(pop_arr);
-                  }
-              } else {
-                  throw new Error(pop_tag + '标签没有闭合!');
-              }
-              // 指针移动tag名长度加'</>'的长度
-              index += tag.length + 3
-          } else if (wordReg.test(rest)) {
-              // 匹配到标签中间的文字
-              let word = rest.match(wordReg)[1];
-              // 看获取到的文字是否全部为空
-              if(!/^\s+$/.test(word)) {
-                  // 不全是空
-                  // 将文字放到stack2栈顶的数组children中
-                  stack2[stack2.length - 1].children.push({'text': word, 'type': 3});
-              }
-              console.log(word);  
-              index += word.length;
-          } else {
-              index++;
-          }
-        }
-        return stack2[0].children[0]
-    }
-
-
-    var templateString = `<div>
-            <h3 class="aa bb cc" data-n="7" id="mybox">你好</h3>
-            <ul>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-            </ul>
-        </div>`;
-
-    const ast = parse(templateString);
-    console.log(ast);
+     function observer(data) {
+         Object.keys(data).forEach(key => {
+            defineReactive(data, key, data[key]);
+         });
+     }
 </script>
 
 </html>
