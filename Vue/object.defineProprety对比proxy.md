@@ -77,8 +77,13 @@ VM72:6 get key: 2 value: 1
 
 pop也是会触发getter方法的
 ```
-
-### 2.Object.defineProperty VS Proxy
+### 2.Vue 对数组的方法重写
+core/observer/index.js
+core/observer/array.js
+* 被重写的方法有：
+push、pop、unshfit、shfit、splice、sort、reverse
+具体可以看[响应式原理](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.md)
+### 3.Object.defineProperty VS Proxy
 
  1. Object.defineProperty 只能劫持对象的属性，而 Proxy 是直接代理对象。
  * 由于 Object.defineProperty 只能对属性进行劫持，需要遍历对象的每个属性，如果属性值也是对象，则需要深度遍历。而 Proxy 直接代理对象，不需要遍历操作。
@@ -86,11 +91,11 @@ pop也是会触发getter方法的
 * 由于 Object.defineProperty 劫持的是对象的属性，所以新增属性时，需要重新遍历对象，对其新增属性再使用 Object.defineProperty 进行劫持。
 所以在vue中给data新增属性时需要使用vm.$set才能是新增的属性也是响应式的
 
-#### 3.Vue 的 set 方法是如何实现的
+#### 4.Vue 的 set 方法是如何实现的
 ```
 export function set (target: Array<any> | Object, key: any, val: any): any {
   // 如果 target 是数组，且 key 是有效的数组索引，会调用数组的 splice 方法，
-  // 我们上面说过，数组的 splice 方法会被重写，重写的方法中会手动 Observe
+  // 数组的 splice 方法会被重写，重写的方法中会手动 Observe
   // 所以 vue 的 set 方法，对于数组，就是直接调用重写 splice 方法
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key)
@@ -116,3 +121,48 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   return val
 }
 ```
+
+### 5.Proxy
+Proxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
+* 使用方式
+```
+const p = new Proxy(target, handler)
+// target是要包装的对象， handler是一个通常以函数作为属性的对象，定义了在执行各种操作时代理 p 的行为
+```
+* 我们使用 proxy来完成拦截对象属性的设置
+```
+const handler = {
+    set: function setter(target, key, value) {
+       console.log('set',key)
+       target[key] = value;
+       return true;
+    }
+}
+
+const Obj = {};
+const p = new Proxy(Obj, handler);
+
+p.name = 'laohuihui'
+// set name
+// 'laohuihui'
+```
+* 我们使用 proxy来完成拦截数组（key）属性的设置
+```
+const handler = {
+    set: function setter(target, key, value) {
+       console.log('set',key)
+       target[key] = value;
+       return true;
+    }
+}
+
+const arr = [];
+const p = new Proxy(arr, handler);
+
+p.push('laohuihui')
+// set 0
+// VM107:3 set length
+// 1
+```
+Proxy除了可以setter和getter可以拦截外，还支持很多拦截操作
+具体用法请看[MDN-Proxy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
