@@ -62,22 +62,26 @@ console.log(test());  // 20 函数独立调用
 4.返回新对象。
 ```
 function Person(name, age) {
-
+     'use strict';
     // 这里的this指向了谁?
     this.name = name;
     this.age = age;   
 }
 
 Person.prototype.getName = function() {
-
-    // 这里的this又指向了谁？
+   
+    // 这里的this又指向了谁
+    console.log(this);
     return this.name;
 }
 
 // 上面的2个this，是同一个吗，他们是否指向了原型对象？
 
 var p1 = new Person('Nick', 20);
-p1.getName();
+console.log(p1)
+p1.getName(); // 指向新对象p1
+var fn = p1.getName
+fn() // 指向window
 ```
 上边对函数中this的定义，p1.getName()中的getName为调用者，他被p1所拥有，因此getName中的this，也是指向了p1。
 

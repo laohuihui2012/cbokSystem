@@ -31,25 +31,26 @@
     //     }
     //     return arr;Str
     // }
-    function defineRactive(data, key ,value) {
-        Object.defineProprety(data, key, {
-            enumerable: true,
-            configurable: true,
-            set: function setter(params) {
-                console.log(`get key: ${key}, vaule:${value} `);
-                return value;
-            },
-            get:function getter(newval) {
-              console.log(`set key:${key}, value:${newval}`); 
-              value = newval; 
-            }
-        })
-    }
-     function observer(data) {
-         Object.keys(data).forEach(key => {
-            defineReactive(data, key, data[key]);
-         });
-     }
+    // function defineRactive(data, key ,value) {
+    //     Object.defineProprety(data, key, {
+    //         enumerable: true,
+    //         configurable: true,
+    //         set: function setter(params) {
+    //             console.log(`get key: ${key}, vaule:${value} `);
+    //             return value;
+    //         },
+    //         get:function getter(newval) {
+    //           console.log(`set key:${key}, value:${newval}`); 
+    //           value = newval; 
+    //         }
+    //     })
+    // }
+    //  function observer(data) {
+    //      Object.keys(data).forEach(key => {
+    //         defineReactive(data, key, data[key]);
+    //      });
+    //  }
+
 </script>
 
 </html>
