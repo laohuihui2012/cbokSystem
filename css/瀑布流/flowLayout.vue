@@ -11,11 +11,11 @@
         <Cover :src="item.src" alt="" :height="item.imgHeightPercent + '%'"></Cover>
       </div>
       <div class="content">
-        <div class="title line2">528㎡让人惊艳的混搭魅力</div>
+        <div class="title line2">老灰灰</div>
         <div class="info flex flex-between flex-middle">
           <div class="designer flex-item-3">
             <img src="@/assets/logo.png" alt="" />
-            <span class="name">FFSTUDsssssssssssIO</span>
+            <span class="name">摄影</span>
           </div>
           <div class="watcher flex-item-2">
             <img src="@/assets/logo.png" alt="" />
@@ -34,7 +34,6 @@ export default {
     Cover
   },
   props: {
-  // 父组件传值给子组件
     list: {
       type: Array,
       default: function () {
@@ -59,13 +58,13 @@ export default {
   },
   data () {
     return {
-      waterfallList: [],
+      waterfallList: [], // 所有的item数据
       imgWidth: 0, // 图片宽度
       contentHeight: 100, // 内容高度
-      waterfallCol: 3, // 瀑布流列数
+      columNum: 3, // 瀑布流列数  给个默认值,当然还可以根据屏幕的宽度变化，设置不同的
       itemRight: 0.5, // 图片右边距(以rem为单位)
       itemBottom: 1, // 图片下边距(以rem为单位)
-      waterfallDeviationHeight: [] // 瀑布流高度偏移量
+      waterfallDeviationHeight: [] // 瀑布流中每列高度
     }
   },
   mounted () {
@@ -80,19 +79,20 @@ export default {
     // 计算每项的宽度(即图片/内容宽度)
     calculationValue () {
       const containerWidth = document.querySelector('.waterfall_container').offsetWidth
-      this.imgWidth = (containerWidth / this.waterfallCol) - this.itemRight
-      // 初始化偏移高度数组,该数组用于存放每一列的高度
-      this.waterfallDeviationHeight = new Array(this.waterfallCol)
+      // 通过列数计算出每一个item的宽度
+      this.imgWidth = (containerWidth / this.columNum) - this.itemRight
+      // 初始化偏移高度数组,该数组用于存放每一列的高度: 初始值[0,0,0]
+      this.waterfallDeviationHeight = new Array(this.columNum)
       for (let i = 0; i < this.waterfallDeviationHeight.length; i++) {
         this.waterfallDeviationHeight[i] = 0
       }
+      // 图片预加载
       this.imgPreloading()
     },
-    // 图片预加载
     imgPreloading () {
+      // 这里通过宽度是计算每个图片的需要设置的高度
       for (let i = 0; i < this.list.length; i++) {
-        const aImg = new Image()
-        console.log(aImg)
+        const aImg = new Image() //
         aImg.src = this.list[i]
         // 注意：图片加载完成的顺序不一样的，所以在页面显示图片的顺序每次都可能不一样
         aImg.onload = aImg.onerror = (e) => {
@@ -113,6 +113,7 @@ export default {
     },
     // 瀑布流布局
     waterfallFlowLayout (itemData) {
+      // 找出最小的列，然后把往后面追加item
       const shortestIndex = this.getShortestCol()
       itemData.top = this.waterfallDeviationHeight[shortestIndex]
       itemData.left = shortestIndex * (this.itemRight + this.imgWidth)
