@@ -8,7 +8,7 @@
       :style="{ top: item.top + 'px', left: item.left + 'px', width: imgWidth + 'px', height: item.itemHeight }"
     >
       <div class="coverImg">
-        <Cover :src="item.src" alt="" :height="item.imgHeightPercent + '%'"></Cover>
+        <Cover :src="item.src" alt="" :itemWidth="imgWidth" :height="item.imgHeightPercent"></Cover>
       </div>
       <div class="content">
         <div class="title line2">老灰灰</div>
@@ -100,7 +100,7 @@ export default {
           // 图片高度按比例缩放
           const imgHeight = (this.imgWidth / aImg.width) * aImg.height
           // 获取图片高度比
-          itemData.imgHeightPercent = (imgHeight / this.imgWidth) * 100
+          itemData.imgHeightPercent = (imgHeight / this.imgWidth)
           // 整体高度 = 图片高度 + 内容高度
           itemData.height = imgHeight + this.contentHeight
           itemData.src = this.list[i]
