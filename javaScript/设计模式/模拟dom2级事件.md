@@ -29,7 +29,6 @@ let sub = (function () {
             if (arr[i] === func) {
                 // 想要移除的
                 // arr.splice(i, 1);
-
                 // 防止数组塌陷，实现当前项的假删除
                 arr[i] = null;
                 break;
