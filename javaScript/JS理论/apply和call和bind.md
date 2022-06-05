@@ -1,3 +1,10 @@
+ ### 1.call、apply、bind
+   * 这三个方法可以显示的指定this的指向
+    - call(obj, ...arg): call第一个参数是this绑定的对象,后面的参数是传入执行函数的参数
+    - apply(obj, []): 第二个参数为一个带下标的集合，可以是数组也可以是伪数组
+    - bind():bind 方法通过传入一个对象，返回一个 this 绑定了传入对象的新函数。
+ 
+ 
  ### apply的实现
  ```
  var obj = {
@@ -28,6 +35,36 @@ obj1.fn()
 delete obj1.fn
 ```
 ##### 实现一个apply
+ *步骤
+   - 判断调用对象是否为函数
+   - 判断传入的上下文对象是否存在
+   - 处理传入的参数
+   - 将函数作为上下文对象的一个属性
+   - 使用上下文调用函数，并保存函数执行的结果
+   - 删除刚新增的属性
+   - 返回保存的结果
+```
+Function.prototype.MyApply = function (context) {
+    // 判断调用对象
+    if(typeof this !== 'function') {
+        console.error('type error');
+    }
+    let res = null;
+    // 判断context是否传入, 没传入就设置为window
+    context = context || window;
+    // 将调用函数设置上下文对象的属性
+    context.fn = this;
+    // 调用函数
+    if(arguments[1]) {
+      res = context.fn(...args);
+    } else {
+      res = context.fn();  
+    }
+    delete context.fn;
+    return res;
+}
+```
+ * 如果不能使用es6的话，就用下面方法
 ```
 //原生JavaScript封装apply方法，第三版
 Function.prototype.apply = function(context) {
@@ -53,28 +90,27 @@ Function.prototype.apply = function(context) {
     return returnValue
 }
 ```
-
-
-利用展开运算符实现
+##### 实现一个call
+步骤和实现apply只有处理参数的不同
 ```
-Function.prototype.myApply=function(context){
-  // 获取调用`myApply`的函数本身，用this获取，如果context不存在，则为window
-  var context = context || window;
-  var fn = Symbol();
-  context[fn] = this;
-  //获取传入的数组参数
-  var args = arguments[1];
-  if (args == undefined) { //没有传入参数直接执行
-    // 执行这个函数
-    context[fn]()
-  } else {
-    // 执行这个函数
-    context[fn](...args);
-  }
-  // 从上下文中删除函数引用
-  delete context.fn;
+Function.prototype.MyCall = function (context) {
+    // 判断调用对象
+    if(typeof this !== 'function') {
+        console.error('type error');
+    }
+    // 获取参数
+    let args = [...arguments].slice(1), 
+        res = null;
+    // 判断context是否传入, 没传入就设置为window
+    context = context || window;
+    // 将调用函数设置上下文对象的属性
+    context.fn = this;
+    // 调用函数
+    res = context.fn(...args);
+    delete context.fn;
+    return res;
 }
-```
+
 
 ##### 通过apply实现一个简单的bind
 ```

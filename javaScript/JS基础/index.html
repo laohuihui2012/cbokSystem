@@ -80,5 +80,23 @@ const listToTree = function listToTree(data) {
     return result;
 }
 
+Function.prototype.MyCall = function (context) {
+    // 判断调用对象
+    if(typeof this !== 'function') {
+        console.error('type error');
+    }
+    // 获取参数
+    let args = [...arguments].slice(1), 
+        res = null;
+    // 判断context是否传入, 没传入就设置为window
+    context = context || window;
+    // 将调用函数设置上下文对象的属性
+    context.fn = this;
+    // 调用函数
+    res = context.fn(...args);
+    delete context.fn;
+    return res;
+}
+
 </script>
 </html>
