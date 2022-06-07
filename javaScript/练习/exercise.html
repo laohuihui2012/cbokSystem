@@ -8,30 +8,55 @@
 </head>
 <body>
     <script>
-        const sum = function (nums, target) {
-            const len = nums.length;
+        // const sum = function (nums, target) {
+        //     const len = nums.length;
             
-            for (let i = 0; i < len - 1; i++) {
-                for (let j = i + 1; j < len; j++) {
-                    if(nums[i] + nums[j] === target) {
-                        return [i, j];
-                    }
-                }
-            }
-        } 
+        //     for (let i = 0; i < len - 1; i++) {
+        //         for (let j = i + 1; j < len; j++) {
+        //             if(nums[i] + nums[j] === target) {
+        //                 return [i, j];
+        //             }
+        //         }
+        //     }
+        // } 
 
         // 哈希表
-        const sum = function (nums, target) {
-            const len = nums.length;
-            var map = new Map();
-            for (let i = 0; i < len; i++) {
-                const needNum = target - nums[i];
-                if(map.has(needNum)) {
-                    return [i, map.get(needNum)];
+        // const sum = function (nums, target) {
+        //     const len = nums.length;
+        //     var map = new Map();
+        //     for (let i = 0; i < len; i++) {
+        //         const needNum = target - nums[i];
+        //         if(map.has(needNum)) {
+        //             return [i, map.get(needNum)];
+        //         }
+        //         map.set(nums[i], i);
+        //     }
+        // }
+
+        var lengthOfLongestSubstring = function(str) {
+            // str长度小于等于1直接返回长度
+            if(str.length <= 1) return str.length;
+            // 准备两个指针
+            let left = 0,
+                right = 1,
+                max = 0,
+                temp = ''; // 用于存放当前截取的
+            while(right <= str.length) {
+                temp = str.slice(left, right);
+                if(temp.indexOf(str.charAt(right)) > -1) { 
+                    // 如果right指针指向的值存在temp中，此时出现重复
+                    left = right;
                 }
-                map.set(nums[i], i);
+                right++;
+                if(right - left > max){
+                    // 如果此时未重复长度比max大，改变max值
+                    max = right - left;
+                } 
             }
-        }
+            return max
+        };
+        let str = 'qweyrqhhroytzxvbcnm';
+        console.log(lengthOfLongestSubstring(str));
     </script>
 </body>
 </html>

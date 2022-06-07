@@ -41,3 +41,33 @@ const sum = function (nums, target) {
     }
 }
 ```
+### 2. 无重复字符的最长子串
+给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+输入: s = "abcabcbb"
+输出: 3 
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+```
+var lengthOfLongestSubstring = function(str) {
+    // str长度小于等于1直接返回长度
+    if(str.length <= 1) return str.length;
+    // 准备两个指针
+    let left = 0,
+        right = 1,
+        max = 0,
+        temp = ''; // 用于存放当前截取的
+    while(right < str.length) {
+        temp = str.slice(left, right);
+        if(temp.indexOf(str.charAt(right)) > -1) { 
+            // 如果right指针指向的值存在temp中，此时出现重复
+            // 此时将left指针移到right
+            left = right;
+        }
+        right++;
+        if(right - left > max){
+            // 如果此时未重复长度比max大，改变max值
+            max = right - left;
+        } 
+    }
+    return max
+};
+```
