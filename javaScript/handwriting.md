@@ -56,7 +56,6 @@ function newObject() {
  * 思路：节流是指在指定的时间内，只执行一次函数，如果在这个时间内有多次触发，只有一次生效。
 ```
 // 时间戳版
-// 该版本第一个的n秒内点击不会触发
 function throttle(fn, delay) {
     let preTime = new Date();
     return function() {
@@ -67,7 +66,7 @@ function throttle(fn, delay) {
         if(nowTime - preTime >= delay) {
             curTime = new Date();
             return fn.applay(context, args);
-        }pre
+        }
     }
 }
 
