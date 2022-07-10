@@ -56,7 +56,7 @@ Function.prototype.MyApply = function (context) {
     context.fn = this;
     // 调用函数
     if(arguments[1]) {
-      res = context.fn(...args);
+      res = context.fn(...arguments[1]);
     } else {
       res = context.fn();  
     }

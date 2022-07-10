@@ -20,7 +20,7 @@ function newObject() {
     // 传入的第一个参数为构造函数
     let constructor = Array.prototype.shift.call(arguments);
     // 判断传入的第一个参数是否为函数
-    if(typeof(constructor) !== 'function') {
+    if(typeof constructor !== 'function') {
         console.error('type error');
         return;
     }
@@ -30,7 +30,7 @@ function newObject() {
     // 执行构造函数
     let res = constructor.apply(newObject, arguments);
     // 判断构造函数执行的结果
-    let flag = res && (typeof(res) === 'function' || typeof(res) === 'object');
+    let flag = res && (typeof res === 'function' || typeof res === 'object');
     return flag ? res : newObject;
 }
 ```
@@ -100,5 +100,79 @@ function throttle(fn, delay) {
     }
 }
  ```
+## 6. call(this, ...args)实现
+ * 思路：
+   - 1.判断调用对象是否为函数
+   - 2.判断上下文对象是否传入，没有则设置为window
+   - 3.处理传入的参数
+   - 4.将调用函数设置为上下文对象的一个方法
+   - 5.使用上下文调用函数，并保存结果
+   - 6.删除新增的方法
+```
+function myCall(context) {
+    // 判断调用对象
+    if( typeof this !== 'function') {
+        console.error('type error');
+    }
+    // 判断上下文对象是否传入，没有则设置为window
+    let context = context || window;
+    let res = null;
+    // 获取第一个参数后面的参数
+    let args = [...arguments].slice(1);
+    // 将调用函数设置为对象的方法
+    context.fn = this;
+    // 执行fn函数
+    res = context.fn(...args);
+    delete context.fn;
+    return res;
+}
+```
+## 7.apply(this, 数组) 实现
+ * 思路：唯一与call不同的是参数的处理
+```
+function myApply(context) {
+    // 判断调用对象
+    if( typeof this !== 'function') {
+        console.error('type error');
+    }
+    // 判断上下文对象是否传入，没有则设置为window
+    let context = context || window,
+        res= null;
+    // 将调用函数设置为对象的方法
+    context.fn = this;
+    // 参数处理
+    if(arguments[1]) {
+        res = context.fn(arguments[1]);
+    } else {
+        res = context.fn();
+    }
+    delete context.fn;
+    return res;
+    }
+```
+## 8.bind(this) 实现
+ * 思路
+   - 1.判断调用对象是否为函数
+   - 2.保存当前函数的引用
+   - 3.创建一个函数返回
+   - 4.函数内部通过apply来绑定函数的调用(判断函数是否为构造函数的情况，是的话则传入当前函数的this给apply调用，其他情况传入上下文对象)
+```
+function myBind(context) {
+    // 判断调用对象
+    if( typeof this !== 'function') {
+        throw new TypeError('Error');
+    }
+    // 保存调用函数的引用
+    let self = this;
+    // 保存去掉context的参数
+    let args = [].slice.call(arguments, 1);
+    return function() {
+        return self.apply(
+            this instanceof self ? this : context,
+            args.concat(...arguments)
+        ) 
+    }
+}
+```
 
   
