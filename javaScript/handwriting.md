@@ -200,12 +200,12 @@ function myBind(context) {
 
     let newObject = Array.isArray(obj) ? [] : {};
 
-        // 遍历 object，并且判断是 object 的属性才拷贝
-        for(let key in obj) {
+    // 遍历 object，并且判断是 object 的属性才拷贝
+    for(let key in obj) {
         if(obj.hasOwnProperty(key)) {
             newObject[key] = obj[key];
         }
-        }
+    }
 }
  ```
 
