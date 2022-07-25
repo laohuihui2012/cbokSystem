@@ -174,5 +174,39 @@ function myBind(context) {
     }
 }
 ```
+### 9.手写深浅拷贝
+ * 深拷贝：
+    - 1.先判断传入的是对象还是基础值或者函数，不是则直接返回
+    - 2.再判断传入的是对象还是数组，是数组则创建一个新数组，对象则创建一个新对象
+    - 3.遍历传入的对象(只遍历自己的属性)，如果属性是对象,则递归遍历，不是直接赋值
+```
+ function deepCopy(obj) {
+    if(!obj || typeof obj !== 'object') return;
+
+    let newObject = Array.isArray(obj) ? [] : {};
+    for(let key in obj) {
+        if(obj.hasOwnProperty(key)) {
+            newObject[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+        }
+    }
+}
+```
+ * 浅拷贝:
+
+ ```
+ function shallowCopy(obj) {
+    // 只拷贝对象
+    if(!obj || typeof obj !== 'object') return;
+
+    let newObject = Array.isArray(obj) ? [] : {};
+
+        // 遍历 object，并且判断是 object 的属性才拷贝
+        for(let key in obj) {
+        if(obj.hasOwnProperty(key)) {
+            newObject[key] = obj[key];
+        }
+        }
+}
+ ```
 
   
