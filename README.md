@@ -14,6 +14,7 @@
    - [响应式原理](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86.md)
    - [DOM diff](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/diff%E7%AE%97%E6%B3%95(%E8%99%9A%E6%8B%9FDOM).md)
    - [AST抽象语法树](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91.md)
+   - [object.defineProprety对比proxy](https://github.com/laohuihui2012/cbokSystem/blob/master/Vue/object.defineProprety%E5%AF%B9%E6%AF%94proxy.md)
 ## javaScipt
  - JS高级
    - [ES6 文档](https://es6.ruanyifeng.com/#docs/promise#Promise-prototype-finally)
