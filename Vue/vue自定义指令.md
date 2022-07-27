@@ -120,7 +120,7 @@ directives: {
     el: '#app',
     data: {
         time: 1565753400000
-    }
+      }
     })
 
     Vue.directive('relativeTime', {

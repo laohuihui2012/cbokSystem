@@ -191,14 +191,22 @@
         }
        console.log(flatArray(arr)); 
 
-       let arr = [1, [2, [3, 4, 5]]];
-        function flatten(arr) {
-            while(arr.some(item => Array.isArray(item))) {
-                arr = [].concat(...arr);
+       const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
+       function uniqueArray(arr) {
+            let map = {},
+                res = [];
+            for(let i = 0; i < arr.length; i++) {
+                console.log([arr[i]]);
+                if(!map.hasOwnProperty(arr[i])) {
+                    map[arr[i]] = 1;
+                    res.push(arr[i]);
+                }
             }
-            return arr;
-        }
-        console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+            return res;
+       }
+
+       console.log(uniqueArray(array)); 
+
 
     </script>
 </body>
