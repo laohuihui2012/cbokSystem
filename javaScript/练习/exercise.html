@@ -207,7 +207,37 @@
 
        console.log(uniqueArray(array)); 
 
+       function myFlat(arr, depth) {
+          if(!Array.isArray(arr) || depth <= 0) {
+            return arr;
+          }
 
+          return arr.reduce((prev, cur) => {
+            if(Array.isArray(cur)) {
+                return prev.concat(myFlat(cur, depth - 1));
+            } else {
+                return prev.concat(cur);
+            }
+          }, [])    
+       }
+
+       Array.prototype.myPush = function() {
+          for(let i = 0; i < this.length; i++) {
+            this[this.length] = arguments[i];
+          }
+          return this.length;
+       }
+
+       Array.prototype.myFliter = function(fn) {
+         if(typeof fn !== 'function') {
+            throw Error('fn must be a function');
+         }
+         const res = [];
+         for( let i = 0; i < this.length; i++) {
+            fn(this[i]) && res.push(this[i]);
+         }
+         return res;
+       }
     </script>
 </body>
 </html>

@@ -121,7 +121,61 @@ const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
  const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
  Array.from(new Set(array)) // [1, 2, 3, 5, 9, 8]
  ```
-### 5.数据组合
+### 5.实现数组的flat方法
+```
+function myFlat(arr, depth) {
+    if(!Array.isArray(arr) || depth <= 0) {
+        return arr;
+    }
+
+    return arr.reduce((prev, cur) => {
+        if(Array.isArray(cur)) {
+            return prev.concat(myFlat(cur, depth - 1));
+        } else {
+            return prev.concat(cur);
+        }
+    }, [])    
+}
+``` 
+### 6.实现数组的push方法
+```
+Array.prototype.myPush = function() {
+    for(let i = 0; i < this.length; i++) {
+        this[this.length] = arguments[i];
+    }
+    return this.length;
+}
+
+```
+### 7. 实现数组的filter方法s
+```
+Array.prototype.myFliter = function(fn) {
+    if(typeof fn !== 'function') {
+        throw Error('fn must be a function');
+    }
+    
+    const res = [];
+    for( let i = 0; i < this.length; i++) {
+        fn(this[i]) && res.push(this[i]);
+    }
+    return res;
+}
+```
+### 8. 实现数组的map方法
+```
+Array.prototype.myFliter = function(fn) {
+    if(typeof fn !== 'function') {
+        throw Error('fn must be a function');
+    }
+    
+    const res = [];
+    for( let i = 0; i < this.length; i++) {
+        res.push(fn(this[i]));
+    }
+    return res;
+}
+```
+### 数据组合
 ```
 const obj = {
     data: [
