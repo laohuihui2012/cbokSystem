@@ -137,6 +137,69 @@
                 }
              }
         }
+
+        Object.defineProperty(Object, 'myAssign', {
+            value: function(target, ... source) {
+                if (target == null) {
+                  return new TypeError('Cannot convert undefined or null to object');
+                }
+               // 目标对象需要统一是引用数据类型，若不是会自动转换
+               let to = Object(target);
+
+               for(let i = i; i < source.length; i++) {
+                 // 每一个源对象
+                 const nextSource = source[i];
+                 if(nextSource !== null) {
+                    // 遍历
+                    for(const key in nextSource) {
+                        // 确保只复制本身的方法和属性
+                        if(Object.prototype.hasOwnProperty.call(nextSource, key)) {
+                            to[key] = nextSource[key];
+                        }
+                    }
+                 }
+               }
+               return to;
+            },
+            // 不可枚举
+            enumerable: false,
+            writable: true,
+            configurable: true,
+        })
+
+        function dateFormat(date, format) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            format = format.replace(/yyyy/, year);
+            format = format.replace(/MM/, month);
+            format = format.replace(/dd/, day);
+            return format
+        }
+
+        let arr = [1, [2, [3, 4, 5]]];
+        function flatArray(arr) {
+            let res = [];
+             for(let i = 0; i < arr.length; i++) {
+                if(Array.isArray(arr[i])) {
+                    res = res.concat(flatArray(arr[i]));
+                } else {
+                    res.push(arr[i]);
+                }
+             }
+             return res;
+        }
+       console.log(flatArray(arr)); 
+
+       let arr = [1, [2, [3, 4, 5]]];
+        function flatten(arr) {
+            while(arr.some(item => Array.isArray(item))) {
+                arr = [].concat(...arr);
+            }
+            return arr;
+        }
+        console.log(flatten(arr)); //  [1, 2, 3, 4，5]
+
     </script>
 </body>
 </html>

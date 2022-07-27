@@ -208,5 +208,57 @@ function myBind(context) {
     }
 }
  ```
+ ### 10. 实现Object.assign
+
+ ```
+ Object.defineProperty(Object, 'myAssign', {
+    value: function(target, ... source) {
+        if (target == null) {
+            return new TypeError('Cannot convert undefined or null to object');
+        }
+        // 目标对象需要统一是引用数据类型，若不是会自动转换
+        let to = Object(target);
+
+        for(let i = i; i < source.length; i++) {
+            // 每一个源对象
+            const nextSource = source[i];
+            if(nextSource !== null) {
+            // 遍历
+            for(const key in nextSource) {
+                // 确保只复制本身的方法和属性
+                if(Object.prototype.hasOwnProperty.call(nextSource, key)) {
+                    to[key] = nextSource[key];
+                }
+            }
+            }
+        }
+        return to;
+    },
+    // 不可枚举
+    enumerable: false,
+    writable: true,
+    configurable: true,
+})
+ ```
+### 11.Object.keys
+
+```
+Object.defineProperty(Object, 'getMyKeys', {
+    value: function(obj) {
+            const result =  []
+            for (let key in obj){
+                if (obj.hasOwnProperty(key)){
+                    result.push(key)
+                }
+            }
+            return result
+        }
+    // 不可枚举
+    enumerable: false,
+    writable: true,
+    configurable: true,
+})
+```
+
 
   
