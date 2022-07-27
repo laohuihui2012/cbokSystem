@@ -122,7 +122,7 @@ const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
  Array.from(new Set(array)) // [1, 2, 3, 5, 9, 8]
  ```
 ### 5.数据组合
-/* 
+```
 const obj = {
     data: [
         ['xiaoming', 'male', '18', 'beijing', '2020-01-02'],
@@ -141,7 +141,7 @@ const obj = {
     { name: 'xiaoming', 'gender': 'male', age: '18', address: 'beijing', registerTime: '2020-01-02' },
     { name: 'xiaofang', 'gender': 'female', age: '18', address: 'shanghai', registerTime: '2020-03-02' }
 ]
-*/
+```
 
 ```
 const combine = function combine(obj) {
