@@ -147,7 +147,7 @@ Array.prototype.myPush = function() {
 }
 
 ```
-### 7. 实现数组的filter方法s
+### 7. 实现数组的filter方法
 ```
 Array.prototype.myFliter = function(fn) {
     if(typeof fn !== 'function') {
@@ -174,6 +174,26 @@ Array.prototype.myFliter = function(fn) {
     }
     return res;
 }
+```
+### 9.实现字符串的repeat方法
+```
+ String.prototype.myRepeat = function(s, n) {
+    return (new Array(n + 1)).join(s);
+}
+
+String.prototype.myRepeat = function(s, n) {
+    return n > 0 ? s.concat(myRepeat(s, --n)) : '';
+}
+```
+### 10. 实现字符串翻转
+```
+String.prototype.myReverse = function name(s) {
+    return s.length > 0 ? s.split('').reverse().join('') : '';
+}
+
+let obj = new String();
+let res = obj.myReverse('hello')
+console.log(res);
 ```
 ### 数据组合
 ```

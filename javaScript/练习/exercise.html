@@ -232,12 +232,26 @@
          if(typeof fn !== 'function') {
             throw Error('fn must be a function');
          }
+
          const res = [];
          for( let i = 0; i < this.length; i++) {
             fn(this[i]) && res.push(this[i]);
          }
          return res;
        }
+
+       String.prototype.myRepeat = function(s, n) {
+        return (new Array(n + 1)).join(s);
+       }
+
+       String.prototype.myReverse = function name(s) {
+         return s.length > 0 ? s.split('').reverse().join('') : '';
+       }
+
+       let obj = new String();
+       let res = obj.myReverse('hello')
+       console.log(res);
+
     </script>
 </body>
 </html>
