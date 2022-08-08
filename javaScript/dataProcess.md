@@ -195,6 +195,52 @@ let obj = new String();
 let res = obj.myReverse('hello')
 console.log(res);
 ```
+### 11.将数字每千分位用逗号隔开
+```
+function formatNum(num) {
+    let str = num && num.toString(); // 先转成字符串
+    let len = str.length;
+    let decimals = '';
+    // 判断是否有小数点
+    str.indexOf('.') > -1 ? decimals = str.split('.')[1] : null;
+    if(len <= 3) {
+        return str;
+    } else {len
+        let remainder = len % 3,
+            temp = '';
+        decimals ? temp = '.' + decimals : null;
+        if(remainder > 0) { // 长度不是3的整数倍
+            return str.slice(0, remainder) + ',' + str.slice(remainder, len).match(/\d{3}/g).join(',') + temp;
+        } else {
+            return str.slice(0, len).match(/\d{3}/g).join(',') + temp;
+        }
+    }
+}
+
+console.log(formatNum(312323.33));  // '2,312,323.33'
+```
+### 12.实现非负大整数相加
+ *思路：
+    ● 首先用字符串的方式来保存大数，这样数字就不会发生变化
+    ● 初始化res，temp来保存中间的计算结果，并将两个字符串转化为数组，以便进行每一位的加法运算
+    ● 将两个数组的对应的位进行相加，两个数相加的结果可能大于10，所以可能要仅为，对10进行取余操作，将结果保存在当前位
+    ● 判断当前位是否大于9，也就是是否会进位，若是则将temp赋值为true，因为在加法运算中，true会自动隐式转化为1，以便于下一次相加
+    ● 重复上述操作，直至计算结束
+```
+// 相加
+function sumBigNumber(a, b) {
+    let res = '',
+    temp = 0;
+    a = a.split('');
+    b = b.split('');
+    while (a.length || b.length || temp) {
+        temp += ~~a.pop() + ~~b.pop();
+        res = (res % 10) + res;
+        temp = temp > 9;            
+    }
+    return res.replace(/^0+/, '');
+} 
+```
 ### 数据组合
 ```
 const obj = {
