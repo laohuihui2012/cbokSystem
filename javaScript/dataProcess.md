@@ -287,6 +287,74 @@ function add(...args) {
     return args.reduce((a, b) => a + b)
 }
 ```
+### 14.为数组转数组
+ *(1)利用call调用数组的slice方法
+```
+Array.prototype.slice.apply(arrayLike)
+```
+ *(2)利用call调用数组的splice方法
+```
+Array.prototype.splice(arrayLike, 0)
+```
+*(3)利用apply调用数组的contcat方法
+```
+Array.prototype.apply([], arrayLike)
+```
+*(4)Array.from
+```
+Array.from(arrayLike)
+```
+### 15.将数组对象转化为树形结构
+```
+// 转换前：
+source = [{
+            id: 1,
+            pid: 0,
+            name: 'body'
+          }, {
+            id: 2,
+            pid: 1,
+            name: 'title'
+          }, {
+            id: 3,
+            pid: 2,
+            name: 'div'
+          }]
+// 转换为: 
+tree = [{
+          id: 1,
+          pid: 0,
+          name: 'body',
+          children: [{
+            id: 2,
+            pid: 1,
+            name: 'title',
+            children: [{
+              id: 3,
+              pid: 1,
+              name: 'div'
+            }]
+          }
+        }]
+```
+```
+function listToTree(data) {
+    if(!Array.isArray(data)) {
+        return data;
+    }
+    let map = new Map();
+    data.forEach( item => {
+        map.set(item.id, item);
+    })
+    let res = [];
+    data.forEach(item => {
+        let parent = map.get(item.pid);
+        parent ? (parent.children || (parent.children = [])).push(item) : res.push(item);
+    })
+    console.log(res);
+    return res;
+}
+```
 ### 数据组合
 ```
 const obj = {

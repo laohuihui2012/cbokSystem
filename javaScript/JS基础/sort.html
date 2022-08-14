@@ -151,8 +151,24 @@
     //     }
     //     return _adder;
     // }
+    
 
-console.log(add(1)(2)(3));
+    function listToTree(data) {
+        if(!Array.isArray(data)) {
+            return data;
+        }
+        let map = new Map();
+        data.forEach( item => {
+            map.set(item.id, item);
+        })
+        let res = [];
+        data.forEach(item => {
+            let parent = map.get(item.pid);
+            parent ? (parent.children || (parent.children = [])).push(item) : res.push(item);
+        })
+        console.log(res);
+        return res;
+    }
 </script>
 
 </html>
