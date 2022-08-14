@@ -86,18 +86,73 @@
     //      console.log(res);
     //    } 
 
-    function sumBigNumber(a, b) {
-         let res = '',
-            temp = 0;
-         a = a.split('');
-         b = b.split('');
-         while (a.length || b.length || temp) {
-            temp += ~~a.pop() + ~~b.pop();
-            res = (res % 10) + res;
-            temp = temp > 9;            
-         }
-         return res.replace(/^0+/, '');
-       } 
+    // function sumBigNumber(a, b) {
+    //      let res = '',
+    //         temp = 0;
+    //      a = a.split('');
+    //      b = b.split('');
+    //      while (a.length || b.length || temp) {
+    //         temp += ~~a.pop() + ~~b.pop();
+    //         res = (res % 10) + res;
+    //         temp = temp > 9;            
+    //      }
+    //      return res.replace(/^0+/, '');
+    //    } 
+
+    // function currying(fn) {
+    //     let args = [];
+    //     return function temp(...newArgs) {
+    //         if( newArgs.length ) {
+    //             args = [
+    //                 ...args,
+    //                 ...newArgs
+    //             ];
+    //             return temp;
+    //         } else {
+    //             let res = fn.apply(this, args);
+    //             args = [];
+    //             return res;
+    //         }
+    //     }
+    // }
+
+    // function add(...args) {
+    //     return args.reduce((a, b) => a + b)
+    // }
+
+    // let addCurry = currying(add);
+    // console.log(addCurry(1)(3,5,56)()) 
+    // function add(m) {
+    //     let temp = function (n) {
+    //         return add(m + n);
+    //     };
+    //     temp.toString = function () {
+    //         return m;
+    //     }
+    //     return temp;
+    // }
+    // console.log(add(1)(2)(3));
+
+    // function add() {
+    //     // 第一次执行时，定义一个数组专门用来存储所有的参数
+    //     var _args = Array.prototype.slice.call(arguments);
+
+    //     // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+    //     var _adder = function() {
+    //         _args.push(...arguments);
+    //         return _adder;
+    //     };
+
+    //     // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+    //     _adder.toString = function () {
+    //         return _args.reduce(function (a, b) {
+    //             return a + b;
+    //         });
+    //     }
+    //     return _adder;
+    // }
+
+console.log(add(1)(2)(3));
 </script>
 
 </html>
