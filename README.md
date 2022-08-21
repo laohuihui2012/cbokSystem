@@ -47,6 +47,10 @@
  - [css](https://www.w3school.com.cn/h.asp)
    - [flex布局](https://github.com/laohuihui2012/cbokSystem/blob/master/css/flex%E5%B8%83%E5%B1%80.md)
    - [BFC](https://zhuanlan.zhihu.com/p/25321647)
+## 设计模式
+ - 
+   - [模拟dom2级事件](https://github.com/laohuihui2012/cbokSystem/blob/master/javaScript/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8F%91%E5%B8%83%E8%80%85%E8%AE%A2%E9%98%85.md)
+   - [发布订阅](https://github.com/laohuihui2012/cbokSystem/blob/master/javaScript/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%8B%9Fdom2%E7%BA%A7%E4%BA%8B%E4%BB%B6.md)
 ## 手写
  -
     - [js基础](https://github.com/laohuihui2012/cbokSystem/blob/master/javaScript/handwriting.md)
