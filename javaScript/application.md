@@ -111,3 +111,46 @@ const step = async () => {
 }
 step()
 ```
+### 2.发布订阅(模拟dom 2级事件)
+```
+class EventCenter {
+    // 定义一个事件池
+    let ponds = {};
+
+    // 添加事件  参数:事件名  事件方法
+    addEventListener(eventType, handler) {
+        // 如果没有该类型事件，创建新得事件数组容器
+        if(!this.ponds[eventType]) {
+            this.ponds[eventType] = [];
+        }
+        // 如果有则存入事件
+        this.poonds[eventType].push(handler);
+    }
+
+    // 触发事件 参数：事件名 事件参数
+    dispatchEvent(eventType, params) {
+        if(!this.ponds[eventType]) {
+            return new Error('此事件无效哦');
+        }
+        this.ponds[eventType].foreach(handler => {
+            handler(params);
+        })
+    }
+
+    // 移除事件 参数：事件名 要删除得事件方法 
+    removeEventListener(eventType, handler) {
+        if(!this.ponds[eventType]) {
+            return new Error('无效事件哦');
+        }
+        // 若第二个参数未穿，移除整个事件容器
+        if(!handler) {
+            delete this.ponds[eventType];
+        } else {
+            const index = this.ponds[eventType].findIndex(e => e === handler);
+            if(index === -1)  return new Error('没有绑定该事件');
+            this.ponds[eventType].splice(index, 1);
+            this.ponds[eventType].length === 0 ? delete this.ponds[eventType] : null;
+        }
+    }
+}
+```
