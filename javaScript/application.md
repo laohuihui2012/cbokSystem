@@ -111,7 +111,7 @@ const step = async () => {
 }
 step()
 ```
-### 2.发布订阅(模拟dom 2级事件)
+### 3.发布订阅(模拟dom 2级事件)
 ```
 class EventCenter {
     // 定义一个事件池
@@ -153,4 +153,52 @@ class EventCenter {
         }
     }
 }
+```
+### 4. 使用 setTimeout 实现 setInterval
+ * setInterval的作用：它真正的作用是每隔一段时间将事件加入事件队列中去，只有当当前的执行栈为空的时候，才能去从事件队列中取出事件执行。
+ * 有时候执行栈执行的时间很长，导致执行栈积累了多个定时器加入的事件，当执行栈空闲时，这些事件辉依次执行，所以就不能严格的按照间隔一段时间执行的效果
+
+ 实现思路是使用递归函数，不断地去执行 setTimeout 从而达到 setInterval 的效果
+```
+function mySetInterval(fn, timeout) {
+    // 控制器，控制是否继续执行
+    var timer = {
+        falg: true,
+    }
+    
+    // 设置递归，模拟setInterval执行
+    function interval() {
+        if(timer.falg) {
+            fn();
+            setTimeout(interval, timeout);
+        }
+    }
+    // 启动定时器
+    setTimeout(interval, timeout);
+    return timer;
+}
+```
+### 5.简写双向数据绑定
+```
+let obj = {};
+    let input = document.getElementById('input');
+    let text = document.getElementById('text');
+
+    Object.defineProperty(obj, 'text', {
+        enumerable: true,
+        configurable: true,
+        get() {
+            console.log('你访问了obj的text属性')
+            return val;
+        },
+        set(newVal) {
+            if(val === newVal) return
+            input.value = newVal;
+            text.innerHTML = newVal;
+        }
+    })
+
+    input.addEventListener('keyup', (e) => {
+        obj.text = e.target.value;
+    })
 ```
