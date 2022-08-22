@@ -391,27 +391,73 @@
     //     return timer;
     // }
 
-    let obj = {};
-    let input = document.getElementById('input');
-    let text = document.getElementById('text');
+    // let obj = {};
+    // let input = document.getElementById('input');
+    // let text = document.getElementById('text');
 
-    Object.defineProperty(obj, 'text', {
-        enumerable: true,
-        configurable: true,
-        get() {
-            console.log('你访问了obj的text属性')
-            return val;
-        },
-        set(newVal) {
-            if(val === newVal) return
-            input.value = newVal;
-            text.innerHTML = newVal;
+    // Object.defineProperty(obj, 'text', {
+    //     enumerable: true,
+    //     configurable: true,
+    //     get() {
+    //         console.log('你访问了obj的text属性')
+    //         return val;
+    //     },
+    //     set(newVal) {
+    //         if(val === newVal) return
+    //         input.value = newVal;
+    //         text.innerHTML = newVal;
+    //     }
+    // })
+
+    // input.addEventListener('keyup', (e) => {
+    //     obj.text = e.target.value;
+    // })
+
+//     const isCycleObject = (obj,parent) => {
+//     const parentArr = parent || [obj];
+//     console.log(parentArr);
+//     for(let i in obj) {
+//         if(typeof obj[i] === 'object') {
+//             let flag = false;
+//             parentArr.forEach((pObj) => {
+//                 if(pObj === obj[i]){
+//                     flag = true;
+//                 }
+//             })
+//             if(flag) return true;
+//             flag = isCycleObject(obj[i],[...parentArr,obj[i]]);
+//             if(flag) return true;
+//         }
+//     }
+//     return false;
+// }
+
+function isCircularReference(obj, parent) {
+    let parentArr = parent || [obj];
+    for(let key in obj) {
+        if(typeof obj[key] === 'object') {
+            let flag = false;
+            parentArr.forEach(innerObj => {
+                if(innerObj === obj[key]) {
+                    flag = true;
+                }
+            });
+            if(flag) return true;
+            flag = isCircularReference(obj[key], [...parentArr, obj[key]]);
+            if(flag) return true;
         }
-    })
+    }
+    return false;
+}
 
-    input.addEventListener('keyup', (e) => {
-        obj.text = e.target.value;
-    })
+
+const a = 1;
+const b = {a};
+const c = {b};
+const o = {d:{a:3},c}
+o.c.b.aa = c;
+
+console.log(isCircularReference(o))
 </script>
 
 </html>
