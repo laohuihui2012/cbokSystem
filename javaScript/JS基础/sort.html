@@ -432,32 +432,85 @@
 //     return false;
 // }
 
-function isCircularReference(obj, parent) {
-    let parentArr = parent || [obj];
-    for(let key in obj) {
-        if(typeof obj[key] === 'object') {
-            let flag = false;
-            parentArr.forEach(innerObj => {
-                if(innerObj === obj[key]) {
-                    flag = true;
-                }
-            });
-            if(flag) return true;
-            flag = isCircularReference(obj[key], [...parentArr, obj[key]]);
-            if(flag) return true;
-        }
-    }
-    return false;
-}
+// function isCircularReference(obj, parent) {
+//     let parentArr = parent || [obj];
+//     for(let key in obj) {
+//         if(typeof obj[key] === 'object') {
+//             let flag = false;
+//             parentArr.forEach(innerObj => {
+//                 if(innerObj === obj[key]) {
+//                     flag = true;
+//                 }
+//             });
+//             if(flag) return true;
+//             flag = isCircularReference(obj[key], [...parentArr, obj[key]]);
+//             if(flag) return true;
+//         }
+//     }
+//     return false;
+// }
 
 
-const a = 1;
-const b = {a};
-const c = {b};
-const o = {d:{a:3},c}
-o.c.b.aa = c;
+// const a = 1;
+// const b = {a};
+// const c = {b};
+// const o = {d:{a:3},c, b}
+// o.c.b.aa = c;
 
-console.log(isCircularReference(o))
+// console.log(isCircularReference(o))
+
+// let imageAsnyc = (url) => {
+//     return new promise((resolve, reject) =>{
+//         let img = new Image();
+//         img.src = url;
+//         img.onload = (image) => {
+//             resolve(image);
+//         };
+//         img.onerror = (err) => {
+//             reject(err);
+//         }
+//     })
+// }
+
+// imageAsnyc(url).then(() => {
+//     console.log('加载成功');
+// }).catch((err) => {
+//     console.log('加载失败');
+// })
+
+
+//  function findMostWord(article) {
+//     if(!article) return;
+//     // 
+//     article = article.trim().toLowerCase();
+//     let wordList = article.match(/[a-z]+/g),
+//         visited = [],
+//         maxNum = 0,
+//         maxWord = '';
+//         console.log(wordList);
+//         console.log(article);
+//         article = " " + wordList.join("  ") + " ";
+//         console.log(article);
+//     wordList.forEach(item => {
+//         if(visited.indexOf(item) < 0) {
+//             visited.push(item);
+//             let word = new RegExp(' ' + item + ' ', 'g');
+//             num = article.match(word).length;
+//             if(num > maxNum) {
+//                 maxNum = num;
+//                 maxWord = item;
+//             }
+//         }
+//     });
+//     return maxWord + ' ' + maxNum;
+//  }
+//  let art = "Studying a subject that you feel pointless is never a fun or easy task. If you're study history, asking yourself the question why is history important is a very good first step. History is an essential part of human civilization. You will find something here that will arouse your interest, or get you thinking about the significance of history"
+//  findMostWord(art)
+for(let i = 0;i < 5; i++) {
+    setTimeout(function(j){
+        console.log(j);
+    }, i* 1000, i);
+ }
 </script>
 
 </html>

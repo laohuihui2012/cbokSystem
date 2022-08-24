@@ -233,3 +233,80 @@ o.c.b.aa = c;
 
 console.log(isCircularReference(o))
 ```
+### 7. 用Promise实现图片的异步加载
+```
+let imageAsnyc = (url) => {
+    return new promise((resolve, reject) =>{
+        let img = new Image();
+        img.src = url;
+        img.onload = (image) => {
+            resolve(image);
+        };
+        img.onerror = (err) => {
+            reject(err);
+        }
+    })
+}
+
+imageAsnyc(url).then(() => {
+    console.log('加载成功');
+}).catch((err) => {
+    console.log('加载失败');
+})
+```
+### 8.查找文章中出现频率最高的单词
+```
+function findMostWord(article) {
+    if(!article) return;
+    // 
+    article = article.trim().toLowerCase();
+    let wordList = article.match(/[a-z]+/g),
+        visited = [],
+        maxNum = 0,
+        maxWord = '';
+        console.log(wordList);
+        console.log(article);
+        article = " " + wordList.join("  ") + " ";
+        console.log(article);
+    wordList.forEach(item => {
+        if(visited.indexOf(item) < 0) {
+            visited.push(item);
+            let word = new RegExp(' ' + item + ' ', 'g');
+            num = article.match(word).length;
+            if(num > maxNum) {
+                maxNum = num;
+                maxWord = item;
+            }
+        }
+    });
+    return maxWord + ' ' + maxNum;
+ }
+ let art = "Studying a subject that you feel pointless is never a fun or easy task. If you're study history, asking yourself the question why is history important is a very good first step. History is an essential part of human civilization. You will find something here that will arouse your interest, or get you thinking about the significance of history"
+ findMostWord(art)
+```
+ ### 9. 实现每隔一秒打印 0,1,2,3,4
+ ```
+ // 使用let 形成块级作用域
+for(let i = 0;i < 5; i++) {
+    setTimeout(function(){
+        console.log(i);
+    }, i* 1000);
+ }
+
+ // 使用闭包实现
+for(let i = 0;i < 5; i++) {
+    (function(j){
+        setTimeout(() => {
+            console.log(j);
+        }, j* 1000);
+    })(i);
+ }
+
+ // 利用setTimeout的第三个参数   （它就是给setTimeout第一个函数的参数）
+
+ for(let i = 0;i < 5; i++) {
+    setTimeout(function(j){
+        console.log(j);
+    }, i* 1000, i);
+ }
+ ```
