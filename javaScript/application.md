@@ -340,3 +340,21 @@ var lengthOfLongestSubstring = function(str) {
     return max
 };
 ```
+### 11.简单实现json
+```
+function addScript(src) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    document.body.appendChild(script);
+}
+
+add('http://xxx.xxx.com/xxx.js?callback=handleRes')
+
+// 一个接收处理返回数据的回调函数
+function handleRes(res) {
+    console.log(res);
+}
+// 接口返回的数据格式
+handleRes({a: 1, b: 2});
+```
