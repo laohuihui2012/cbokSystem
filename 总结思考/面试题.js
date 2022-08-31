@@ -30,10 +30,10 @@ class Cash {
     constructor(value) {
         this.primitiveValue = value;
         this.str = handle(value);
-        console.log(this.str);
+        // console.log(this.str);
         let result = new String(this.str);
-        console.log(result);
-        console.log(this);
+        // console.log(result);
+        // console.log(this);
         Object.setPrototypeOf(result, this);
         return result;
     }
