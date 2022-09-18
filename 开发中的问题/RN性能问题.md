@@ -4,8 +4,8 @@
  但是FlatList在老的机型上有性能问题，当下拉的数据越多时，页面越卡现象
 
  * 后面找到了一个更好的高性能RN列表组件： 
-  - RecyclerListView
-##### 1.1 ListView、FlatList和RecyclerListView区别
+   - RecyclerListView
+#### 1.1 ListView、FlatList和RecyclerListView区别
  * ListView：会一次性创建所有的列表单元格——cell。如果列表数据比较多，则会创建很多的视图对象，而视图对象是非常消耗内存的。所以ListView组件对于这种几十页的数据的业务基本上是不可以用的。
 
 
