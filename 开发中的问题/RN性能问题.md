@@ -8,9 +8,11 @@
 ##### 1.1 ListView、FlatList和RecyclerListView区别
  * ListView：会一次性创建所有的列表单元格——cell。如果列表数据比较多，则会创建很多的视图对象，而视图对象是非常消耗内存的。所以ListView组件对于这种几十页的数据的业务基本上是不可以用的。
 
+
  * FlatList：它之所以比ListView性能好，是因为它会回收不在可视区域的视图，然后根据页面的滚动创建现在可视区域的视图。
    - 1) FlatList是将不可见的视图回收，从内存中清除了，下次需要的时候再重新创建。
    - 2) 这样就需要设备在页面滚动时能快速创建出可见的视图，老的设备因为老化和本身硬件性能等原因，计算力等跟不上，导致创建视图的速度达不到使列表流畅滚动的要求(卡顿)。
+
 
  * RecyclerListView: 为什么RecyclerListView的性能更好呢
    - RecyclerListView和FlatList一样仅创建可见区域的视图
