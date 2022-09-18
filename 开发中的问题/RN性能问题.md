@@ -23,10 +23,10 @@
 RecyclerListView使用请参考：[Flipkart/recyclerlistview](https://github.com/Flipkart/recyclerlistview/blob/afd7d80c13bad68ddbb60849ccda47ccef3ecda2/src/core/RecyclerListView.tsx#L488-L566)
 
 ### 2.关于rn列表组件与ScrollView嵌套产生的坑
-  * 其实这个坑也是在猜你喜欢时发现的，这一块其实是两个性能问题，一个是FlatList导致的，一个是列表组件与ScrollView嵌套导致的
+ * 其实这个坑也是在猜你喜欢时发现的，这一块其实是两个性能问题，一个是FlatList导致的，一个是列表组件与ScrollView嵌套导致的
    - 当FlatList外部嵌套了一层可滑动布局时，下拉加载一次数据页面变得反应慢了，老机型上面则是更加明显，拉来android开发一看，内存占用过高导致。后面查资料定位到是因为当外层嵌套滑动布局时，FlatList的不可视区域回收复用机制将失效。
 
-  * 解决方案：
+ * 解决方案：
    - 1.将组件整个瀑布流上面的部分封装成一个头部组件，下拉加载更多后面的部分封装成footer组件，这两个组件作为瀑布流组件的两个属性传入，这样就可以取消外层的ScrollView
 
 
