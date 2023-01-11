@@ -33,262 +33,264 @@
         //     }
         // }
 
-        var lengthOfLongestSubstring = function(str) {
-            // str长度小于等于1直接返回长度
-            if(str.length <= 1) return str.length;
-            // 准备两个指针
-            let left = 0,
-                right = 1,
-                max = 0,
-                temp = ''; // 用于存放当前截取的
-            while(right <= str.length) {
-                temp = str.slice(left, right);
-                if(temp.indexOf(str.charAt(right)) > -1) { 
-                    // 如果right指针指向的值存在temp中，此时出现重复
-                    left = right;
-                }
-                right++;
-                if(right - left > max){
-                    // 如果此时未重复长度比max大，改变max值
-                    max = right - left;
-                } 
-            }
-            return max
-        };
-        let str = 'qweyrqhhroytzxvbcnm';
-        console.log(lengthOfLongestSubstring(str));
+    //     var lengthOfLongestSubstring = function(str) {
+    //         // str长度小于等于1直接返回长度
+    //         if(str.length <= 1) return str.length;
+    //         // 准备两个指针
+    //         let left = 0,
+    //             right = 1,
+    //             max = 0,
+    //             temp = ''; // 用于存放当前截取的
+    //         while(right <= str.length) {
+    //             temp = str.slice(left, right);
+    //             if(temp.indexOf(str.charAt(right)) > -1) { 
+    //                 // 如果right指针指向的值存在temp中，此时出现重复
+    //                 left = right;
+    //             }
+    //             right++;
+    //             if(right - left > max){
+    //                 // 如果此时未重复长度比max大，改变max值
+    //                 max = right - left;
+    //             } 
+    //         }
+    //         return max
+    //     };
+    //     let str = 'qweyrqhhroytzxvbcnm';
+    //     console.log(lengthOfLongestSubstring(str));
 
-        function myCall(context) {
-            // 判断调用对象
-            if( typeof this !== 'function') {
-                console.error('type error');
-            }
-            // 判断上下文对象是否传入，没有则设置为window
-            let context = context || window;
-            let res = null;
-            // 获取第一个参数后面的参数
-            let args = [...arguments].slice(1);
-            // 将调用函数设置为对象的方法
-            context.fn = this;
-            // 执行fn函数
-            res = context.fn(...args);
-            delete context.fn;
-            return res;
-        }
+    //     function myCall(context) {
+    //         // 判断调用对象
+    //         if( typeof this !== 'function') {
+    //             console.error('type error');
+    //         }
+    //         // 判断上下文对象是否传入，没有则设置为window
+    //         let context = context || window;
+    //         let res = null;
+    //         // 获取第一个参数后面的参数
+    //         let args = [...arguments].slice(1);
+    //         // 将调用函数设置为对象的方法
+    //         context.fn = this;
+    //         // 执行fn函数
+    //         res = context.fn(...args);
+    //         delete context.fn;
+    //         return res;
+    //     }
 
-        function myApply(context) {
-            // 判断调用对象
-            if( typeof this !== 'function') {
-                console.error('type error');
-            }
-            // 判断上下文对象是否传入，没有则设置为window
-            let context = context || window,
-                res= null;
-            // 将调用函数设置为对象的方法
-            context.fn = this;
-            // 参数处理
-            if(arguments[1]) {
-                res = context.fn(arguments[1]);
-            } else {
-                res = context.fn();
-            }
-            delete context.fn;
-            return res;
-        }
+    //     function myApply(context) {
+    //         // 判断调用对象
+    //         if( typeof this !== 'function') {
+    //             console.error('type error');
+    //         }
+    //         // 判断上下文对象是否传入，没有则设置为window
+    //         let context = context || window,
+    //             res= null;
+    //         // 将调用函数设置为对象的方法
+    //         context.fn = this;
+    //         // 参数处理
+    //         if(arguments[1]) {
+    //             res = context.fn(arguments[1]);
+    //         } else {
+    //             res = context.fn();
+    //         }
+    //         delete context.fn;
+    //         return res;
+    //     }
 
-        function myBind(context) {
-            // 判断调用对象
-            if( typeof this !== 'function') {
-                throw new TypeError('Error');
-            }
-            // 保存调用函数的引用
-            let self = this;
-            // 保存去掉context的参数
-            let args = [].slice.call(arguments, 1);
-            return function() {
-               return self.apply(
-                   this instanceof self ? this : context,
-                   args.concat(...arguments)
-               ) 
-            }
-        }
+    //     function myBind(context) {
+    //         // 判断调用对象
+    //         if( typeof this !== 'function') {
+    //             throw new TypeError('Error');
+    //         }
+    //         // 保存调用函数的引用
+    //         let self = this;
+    //         // 保存去掉context的参数
+    //         let args = [].slice.call(arguments, 1);
+    //         return function() {
+    //            return self.apply(
+    //                this instanceof self ? this : context,
+    //                args.concat(...arguments)
+    //            ) 
+    //         }
+    //     }
 
-        function deepCopy(obj) {
-            if(!obj || typeof obj !== 'object') return;
+    //     function deepCopy(obj) {
+    //         if(!obj || typeof obj !== 'object') return;
 
-            let newObject = Array.isArray(obj) ? [] : {};
-            for(let key in obj) {
-                if(obj.hasOwnProperty(key)) {
-                    newObject[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
-                }
-            }
-        }
+    //         let newObject = Array.isArray(obj) ? [] : {};
+    //         for(let key in obj) {
+    //             if(obj.hasOwnProperty(key)) {
+    //                 newObject[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+    //             }
+    //         }
+    //     }
 
-        function shallowCopy(obj) {
-            // 只拷贝对象
-            if(!obj || typeof obj !== 'object') return;
+    //     function shallowCopy(obj) {
+    //         // 只拷贝对象
+    //         if(!obj || typeof obj !== 'object') return;
 
-            let newObject = Array.isArray(obj) ? [] : {};
+    //         let newObject = Array.isArray(obj) ? [] : {};
 
-             // 遍历 object，并且判断是 object 的属性才拷贝
-             for(let key in obj) {
-                if(obj.hasOwnProperty(key)) {
-                    newObject[key] = obj[key];
-                }
-             }
-        }
+    //          // 遍历 object，并且判断是 object 的属性才拷贝
+    //          for(let key in obj) {
+    //             if(obj.hasOwnProperty(key)) {
+    //                 newObject[key] = obj[key];
+    //             }
+    //          }
+    //     }
 
-        Object.defineProperty(Object, 'myAssign', {
-            value: function(target, ... source) {
-                if (target == null) {
-                  return new TypeError('Cannot convert undefined or null to object');
-                }
-               // 目标对象需要统一是引用数据类型，若不是会自动转换
-               let to = Object(target);
+    //     Object.defineProperty(Object, 'myAssign', {
+    //         value: function(target, ... source) {
+    //             if (target == null) {
+    //               return new TypeError('Cannot convert undefined or null to object');
+    //             }
+    //            // 目标对象需要统一是引用数据类型，若不是会自动转换
+    //            let to = Object(target);
 
-               for(let i = i; i < source.length; i++) {
-                 // 每一个源对象
-                 const nextSource = source[i];
-                 if(nextSource !== null) {
-                    // 遍历
-                    for(const key in nextSource) {
-                        // 确保只复制本身的方法和属性
-                        if(Object.prototype.hasOwnProperty.call(nextSource, key)) {
-                            to[key] = nextSource[key];
-                        }
-                    }
-                 }
-               }
-               return to;
-            },
-            // 不可枚举
-            enumerable: false,
-            writable: true,
-            configurable: true,
-        })
+    //            for(let i = i; i < source.length; i++) {
+    //              // 每一个源对象
+    //              const nextSource = source[i];
+    //              if(nextSource !== null) {
+    //                 // 遍历
+    //                 for(const key in nextSource) {
+    //                     // 确保只复制本身的方法和属性
+    //                     if(Object.prototype.hasOwnProperty.call(nextSource, key)) {
+    //                         to[key] = nextSource[key];
+    //                     }
+    //                 }
+    //              }
+    //            }
+    //            return to;
+    //         },
+    //         // 不可枚举
+    //         enumerable: false,
+    //         writable: true,
+    //         configurable: true,
+    //     })
 
-        function dateFormat(date, format) {
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
-            format = format.replace(/yyyy/, year);
-            format = format.replace(/MM/, month);
-            format = format.replace(/dd/, day);
-            return format
-        }
+    //     function dateFormat(date, format) {
+    //         var day = date.getDate();
+    //         var month = date.getMonth() + 1;
+    //         var year = date.getFullYear();
+    //         format = format.replace(/yyyy/, year);
+    //         format = format.replace(/MM/, month);
+    //         format = format.replace(/dd/, day);
+    //         return format
+    //     }
 
-        let arr = [1, [2, [3, 4, 5]]];
-        function flatArray(arr) {
-            let res = [];
-             for(let i = 0; i < arr.length; i++) {
-                if(Array.isArray(arr[i])) {
-                    res = res.concat(flatArray(arr[i]));
-                } else {
-                    res.push(arr[i]);
-                }
-             }
-             return res;
-        }
-       console.log(flatArray(arr)); 
+    //     let arr = [1, [2, [3, 4, 5]]];
+    //     function flatArray(arr) {
+    //         let res = [];
+    //          for(let i = 0; i < arr.length; i++) {
+    //             if(Array.isArray(arr[i])) {
+    //                 res = res.concat(flatArray(arr[i]));
+    //             } else {
+    //                 res.push(arr[i]);
+    //             }
+    //          }
+    //          return res;
+    //     }
+    //    console.log(flatArray(arr)); 
 
-       const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
-       function uniqueArray(arr) {
-            let map = {},
-                res = [];
-            for(let i = 0; i < arr.length; i++) {
-                console.log([arr[i]]);
-                if(!map.hasOwnProperty(arr[i])) {
-                    map[arr[i]] = 1;
-                    res.push(arr[i]);
-                }
-            }
-            return res;
-       }
+    //    const array = [1, 2, 3, 5, 1, 5, 9, 1, 2, 8];
+    //    function uniqueArray(arr) {
+    //         let map = {},
+    //             res = [];
+    //         for(let i = 0; i < arr.length; i++) {
+    //             console.log([arr[i]]);
+    //             if(!map.hasOwnProperty(arr[i])) {
+    //                 map[arr[i]] = 1;
+    //                 res.push(arr[i]);
+    //             }
+    //         }
+    //         return res;
+    //    }
 
-       console.log(uniqueArray(array)); 
+    //    console.log(uniqueArray(array)); 
 
-       function myFlat(arr, depth) {
-          if(!Array.isArray(arr) || depth <= 0) {
-            return arr;
-          }
+    //    function myFlat(arr, depth) {
+    //       if(!Array.isArray(arr) || depth <= 0) {
+    //         return arr;
+    //       }
 
-          return arr.reduce((prev, cur) => {
-            if(Array.isArray(cur)) {
-                return prev.concat(myFlat(cur, depth - 1));
-            } else {
-                return prev.concat(cur);
-            }
-          }, [])    
-       }
+    //       return arr.reduce((prev, cur) => {
+    //         if(Array.isArray(cur)) {
+    //             return prev.concat(myFlat(cur, depth - 1));
+    //         } else {
+    //             return prev.concat(cur);
+    //         }
+    //       }, [])    
+    //    }
 
-       Array.prototype.myPush = function() {
-          for(let i = 0; i < this.length; i++) {
-            this[this.length] = arguments[i];
-          }
-          return this.length;
-       }
+    //    Array.prototype.myPush = function() {
+    //       for(let i = 0; i < this.length; i++) {
+    //         this[this.length] = arguments[i];
+    //       }
+    //       return this.length;
+    //    }
 
-       Array.prototype.myFliter = function(fn) {
-         if(typeof fn !== 'function') {
-            throw Error('fn must be a function');
-         }
+    //    Array.prototype.myFliter = function(fn) {
+    //      if(typeof fn !== 'function') {
+    //         throw Error('fn must be a function');
+    //      }
 
-         const res = [];
-         for( let i = 0; i < this.length; i++) {
-            fn(this[i]) && res.push(this[i]);
-         }
-         return res;
-       }
+    //      const res = [];
+    //      for( let i = 0; i < this.length; i++) {
+    //         fn(this[i]) && res.push(this[i]);
+    //      }
+    //      return res;
+    //    }
 
-       String.prototype.myRepeat = function(s, n) {
-        return (new Array(n + 1)).join(s);
-       }
+    //    String.prototype.myRepeat = function(s, n) {
+    //     return (new Array(n + 1)).join(s);
+    //    }
 
-       String.prototype.myReverse = function name(s) {
-         return s.length > 0 ? s.split('').reverse().join('') : '';
-       }
+    //    String.prototype.myReverse = function name(s) {
+    //      return s.length > 0 ? s.split('').reverse().join('') : '';
+    //    }
 
-       let obj = new String();
-       let res = obj.myReverse('hello')
-       console.log(res);
-
-
-       function formatNum(num) {
-        let str = num && num.toString(); // 先转成字符串
-        let len = str.length;
-        let decimals = '';
-        // 判断是否有小数点
-        str.indexOf('.') > -1 ? decimals = str.split('.')[1] : null;
-        if(len <= 3) {
-            return str;
-        } else {len
-            let remainder = len % 3,
-                temp = '';
-            decimals ? temp = '.' + decimals : null;
-            if(remainder > 0) { // 长度不是3的整数倍
-                return str.slice(0, remainder) + ',' + str.slice(remiander, len).match(/\d{3}g/).join(',') + temp;
-            } else {
-                return str.slice(0, len).match(/\{3}g/).join(',') + temp;
-            }
-        }
-       }
-
-       format(2312323.33)  // '12,323.33'
+    //    let obj = new String();
+    //    let res = obj.myReverse('hello')
+    //    console.log(res);
 
 
-       function sumBigNumber(a, b) {
-         let res = '',
-            temp = 0;
-         a = a.split('');
-         b = b.split('');
-         while (a.length || b.length || temp) {
-            temp += ~~a.pop() + ~~b.pop();
-            res = (res % 10) + res;
-            temp = temp > 9;            
-         }
-         return res.replace(/^0+/, '');
-       } 
-       sumBigNumber(Number.MAX_VALUE, Number.MAX_SAFE_INTEGER)
+    //    function formatNum(num) {
+    //     let str = num && num.toString(); // 先转成字符串
+    //     let len = str.length;
+    //     let decimals = '';
+    //     // 判断是否有小数点
+    //     str.indexOf('.') > -1 ? decimals = str.split('.')[1] : null;
+    //     if(len <= 3) {
+    //         return str;
+    //     } else {len
+    //         let remainder = len % 3,
+    //             temp = '';
+    //         decimals ? temp = '.' + decimals : null;
+    //         if(remainder > 0) { // 长度不是3的整数倍
+    //             return str.slice(0, remainder) + ',' + str.slice(remiander, len).match(/\d{3}g/).join(',') + temp;
+    //         } else {
+    //             return str.slice(0, len).match(/\{3}g/).join(',') + temp;
+    //         }
+    //     }
+    //    }
+
+    //    format(2312323.33)  // '12,323.33'
+
+
+    //    function sumBigNumber(a, b) {
+    //      let res = '',
+    //         temp = 0;
+    //      a = a.split('');
+    //      b = b.split('');
+    //      while (a.length || b.length || temp) {
+    //         temp += ~~a.pop() + ~~b.pop();
+    //         res = (res % 10) + res;
+    //         temp = temp > 9;            
+    //      }
+    //      return res.replace(/^0+/, '');
+    //    } 
+    //    sumBigNumber(Number.MAX_VALUE, Number.MAX_SAFE_INTEGER)
+
+    let arr = [{}]
     </script>
 </body>
 </html>

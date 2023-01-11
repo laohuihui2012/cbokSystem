@@ -180,6 +180,7 @@ function mySetInterval(fn, timeout) {
 ```
 ### 5.简写双向数据绑定
 ```
+
 let obj = {};
     let input = document.getElementById('input');
     let text = document.getElementById('text');

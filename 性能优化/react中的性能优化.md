@@ -25,7 +25,6 @@ constructor (props) {
    - React.memo 仅检查 props 变更。如果函数组件被 React.memo 包裹，且其实现中拥有 useState，useReducer 或 useContext 的 Hook，当 state 或 context 发生变化时，它仍会重新渲染。
    - 默认情况下其只会对复杂对象做浅层对比，如果你想要控制对比过程，那么请将自定义的比较函数通过第二个参数传入来实现
 ```
-
   const childCom = (props) => {
     // 使用props渲染
   }
@@ -37,7 +36,7 @@ constructor (props) {
   export default React.memo(childCom, areEqual)
 ```
 ### 5.使用useMemo缓存函数
-### 6.正确使用列表 key
+### 6.给item列表添加 key
   * 进行列表渲染时，React 会要求你给它们提供 key，让 React 识别更新后的位置变化，避免一些不必要的组件树销毁和重建工作。
     - 比如你的第一个元素是 div，更新后发生了位置变化，第一个变成了 p。如果你不通过 key 告知新位置，React 就会将 div 下的整棵树销毁，然后构建 p 下的整棵树，非常耗费性能。
     - 如果你提供了位置，React 就会做真实 DOM 的位置移动，然后做树的更新，而不是销毁和重建。
@@ -61,3 +60,7 @@ function Component(props) {
   return <AnotherComponent style={styles} {...aProp} />  
 }
 ```
+### 8.优化条件渲染
+### 9.合并setState
+### 10.属性对象只创建一次
+### 11.在子组件中render
