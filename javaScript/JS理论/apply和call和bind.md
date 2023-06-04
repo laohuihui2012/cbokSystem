@@ -110,7 +110,7 @@ Function.prototype.MyCall = function (context) {
     delete context.fn;
     return res;
 }
-
+```
 
 ##### 通过apply实现一个简单的bind
 ```
